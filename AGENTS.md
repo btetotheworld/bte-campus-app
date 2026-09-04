@@ -77,6 +77,7 @@ db/migrations/      one owner.
 ## 5. Writing code here
 
 - TypeScript strict. No `any`. No `@ts-ignore` without a comment explaining why.
+- Class names are always complete literal strings, never constructed from variables. A dynamic class produces no CSS and no error.
 - Name things the way the BTE documents name them. A chapter is a chapter, a lead is a lead, an assistant lead is an assistant lead, a build log is a build log. Do not invent synonyms.
 - Errors are handled and surfaced to the user. No silent `catch {}`.
 - Loading and empty states are part of the feature, not a later pass. A list with no empty state is not finished.
