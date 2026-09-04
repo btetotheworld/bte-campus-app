@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+/* BTE design system. Authoritative source: docs/DESIGN_SYSTEM.md
+   Agents: do not add a token here. Do not widen a scale to make a class work.
+   The `initial` lines below delete Tailwind's defaults on purpose. That is what
+   makes the design system binding rather than advisory: rounded-lg, p-7 and
+   text-3xl stop existing, so nothing can reach for them. */
+
+@theme {
+  /* ---- Colour ------------------------------------------------------------
+     Electric #0000FF is deliberately absent. It sits at 1.20:1 against navy,
+     and navy is the dominant surface in this product. See DESIGN_SYSTEM 2.  */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-inherit: inherit;
+
+  /* Brand */
+  --color-navy: #2226b7; /* 10.35:1 on white. Safe everywhere.        */
+  --color-ember: #fe7c09; /* 2.59:1 on white. FILLS ONLY, never text.  */
+
+  /* Neutrals — provisional, pending brand sign-off */
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f5;
+  --color-surface-2: #efefec;
+  --color-border: #e2e2de;
+  --color-border-strong: #c9c9c4;
+  --color-ink: #1a1a1a; /* 17.40:1 on white */
+  --color-ink-secondary: #4a4a48;
+  --color-ink-muted: #6b6b6b; /* 5.33:1 on white. Do not go lighter.       */
+
+  /* Semantic — provisional. Use only when the colour carries meaning. */
+  --color-success: #0f6e56;
+  --color-warning: #854f0b;
+  --color-danger: #a32d2d;
+
+  /* ---- Spacing -----------------------------------------------------------
+     v4 generates a dynamic scale from --spacing. Killing it and declaring
+     each step means p-7 and gap-[13px] are not classes that exist.          */
+  --spacing: initial;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  /* ---- Radius ------------------------------------------------------------
+     4px maximum on rectangles. Brand constraint, not preference, and the
+     single most visible thing separating this from generic AI output.       */
+  --radius-*: initial;
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-full: 9999px;
+
+  /* ---- Type --------------------------------------------------------------
+     Nine steps. Do not add a tenth.                                          */
+  --text-*: initial;
+  --text-display: 40px;
+  --text-display--line-height: 48px;
+  --text-h1: 30px;
+  --text-h1--line-height: 38px;
+  --text-h2: 22px;
+  --text-h2--line-height: 30px;
+  --text-h3: 18px;
+  --text-h3--line-height: 26px;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 26px;
+  --text-body: 15px;
+  --text-body--line-height: 24px;
+  --text-sm: 13px;
+  --text-sm--line-height: 20px;
+  --text-mono-sm: 12px;
+  --text-mono-sm--line-height: 18px;
+
+  /* ---- Weight ------------------------------------------------------------
+     Two only. 700 makes the interface shout.                                */
+  --font-weight-*: initial;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+
+  /* ---- Fonts -------------------------------------------------------------
+     Variables set by next/font/google in app/layout.tsx                     */
+  --font-*: initial;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* ---- Shadow ------------------------------------------------------------
+     One value, for genuinely floating layers. Cards do not get shadows.     */
+  --shadow-*: initial;
+  --shadow-floating: 0 4px 12px rgb(26 26 26 / 0.1);
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --transition-duration-fast: 150ms;
+  --transition-duration-DEFAULT: 200ms;
+  --transition-duration-slow: 250ms;
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-leave: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---- Layout ------------------------------------------------------------ */
+  --container-content: 1200px;
+  --container-wide: 1440px;
+}
+
+/* shadcn/ui token bridge. shadcn components read these names; they are mapped
+   onto BTE tokens so the primitives inherit the system without being forked. */
+@layer base {
+  :root {
+    --background: var(--color-bg);
+    --foreground: var(--color-ink);
+    --card: var(--color-bg);
+    --card-foreground: var(--color-ink);
+    --popover: var(--color-bg);
+    --popover-foreground: var(--color-ink);
+    --primary: var(--color-navy);
+    --primary-foreground: var(--color-white);
+    --secondary: var(--color-surface);
+    --secondary-foreground: var(--color-ink);
+    --muted: var(--color-surface);
+    --muted-foreground: var(--color-ink-muted);
+    --accent: var(--color-surface-2);
+    --accent-foreground: var(--color-ink);
+    --destructive: var(--color-danger);
+    --destructive-foreground: var(--color-white);
+    --input: var(--color-border);
+    --ring: var(--color-navy);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-ink);
+  }
+
+  /* Focus is never removed, only replaced. */
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* The mono uppercase label used for metadata, table headers and IDs.
+     This is the only place uppercase is permitted. */
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    line-height: var(--text-mono-sm--line-height);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Ember is unreadable as text on white (2.59:1). Use it as a fill with ink
+     on top, never as the text colour itself. */
+  .ember-fill {
+    background-color: var(--color-ember);
+    color: var(--color-ink);
+  }
+}

@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    name: Typecheck, lint, test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Lint (fail on warnings)
+        run: pnpm run lint
+
+      - name: Test
+        run: pnpm run test
+
+  db-migration-check:
+    name: db/ changes require a new migration
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check db/ changes are accompanied by a new migration
+        run: |
+          set -euo pipefail
+
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+
+          CHANGED_DB="$(git diff --name-only "$BASE" "$HEAD" -- db/ || true)"
+
+          if [ -z "$CHANGED_DB" ]; then
+            echo "No changes under db/. Nothing to check."
+            exit 0
+          fi
+
+          echo "Changed files under db/:"
+          echo "$CHANGED_DB"
+
+          # A schema change must arrive as a NEW file under db/migrations/, not
+          # an edit to an existing migration and not a change elsewhere under
+          # db/ (db/tests/, db/seed/) on its own.
+          NEW_MIGRATIONS="$(git diff --name-status "$BASE" "$HEAD" -- db/migrations/ | awk '$1 == "A" {print $2}')"
+
+          if [ -z "$NEW_MIGRATIONS" ]; then
+            echo "::error::Files changed under db/ but no new file was added under db/migrations/. Schema changes are a new migration file, by the foundation owner — see AGENTS.md and docs/ARCHITECTURE.md."
+            exit 1
+          fi
+
+          echo "New migration file(s) found:"
+          echo "$NEW_MIGRATIONS"

@@ -1,0 +1,50 @@
+# See https://nextjs.org/docs/app/building-your-application/configuring/eslint for more about ignoring files
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# pnpm falls back to a project-local content-addressable store (instead of the
+# global one) when the project directory is on a different filesystem/mount
+# than the global store. This is dependency cache data, never source.
+.pnpm-store
+
+# BTE governance Word files. Background only. See docs/campus-documents/.
+*.docx
