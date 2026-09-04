@@ -25,11 +25,11 @@ The interface should read as though a product designer made deliberate choices, 
 
 ### Brand palette — fixed
 
-| Token      | Hex       | Role                                                              |
-| ---------- | --------- | ----------------------------------------------------------------- |
-| `navy`     | `#2226B7` | Primary. Headings, primary buttons, active states, table headers. |
-| `ember`    | `#FE7C09` | Accent. Fills, rules, large display type on navy.                 |
-| `electric` | `#0000FF` | **Excluded from the UI palette.** See below.                      |
+| Token      | Hex       | Role                                                                             |
+| ---------- | --------- | -------------------------------------------------------------------------------- |
+| `navy`     | `#2226B7` | Primary. Headings, primary buttons, table headers. Hover and active are derived. |
+| `ember`    | `#FE7C09` | Accent. Fills, rules, large display type on navy.                                |
+| `electric` | `#0000FF` | **Excluded from the UI palette.** See below.                                     |
 
 ### Measured contrast — these are constraints, not guidance
 
@@ -46,7 +46,7 @@ The interface should read as though a product designer made deliberate choices, 
 
 1. **Ember never carries meaning on white.** It may be a fill, a rule, or a block of colour. It may not be text, an icon a user must read, or a border that indicates state. If information depends on it, use navy or ink.
 2. **Ember on navy is display only.** Large headings and graphic elements. Never body copy.
-3. **Text on an ember fill is ink**, never white and never navy.
+3. **Text on an ember fill is ink**, never white and never navy. This includes the ember badge. Ink on ember is 6.71:1. The component enforces ink. Do not accept a colour prop that could put white on ember.
 4. **Electric is not in the UI palette.** It passes on white but sits 1.20:1 against navy, and navy is the dominant surface colour in this product. Any layout change that brings the two together produces an invisible element. Excluding it removes a whole class of accessibility failure for a colour that adds nothing navy does not already do. Keep it for brand collateral where the layout is controlled.
 5. **One accent per screen.** If a screen already uses ember, it does not also use a semantic colour for emphasis.
 
@@ -72,6 +72,19 @@ The brand palette has no neutrals. These are an engineering proposal pending sig
 `success #0F6E56` · `warning #854F0B` · `danger #A32D2D` · `info` uses navy.
 
 Semantic colour appears only when it carries meaning. A neutral chip is the default; a red one means something is wrong.
+
+### Interaction states
+
+Not brand tokens. Derived: the base fill mixed 8% (hover) and 15% (active) toward `ink`. Do not hardcode a third mix, and do not use `#1B1E92` (navy mixed 20% toward black). White on each of these passes.
+
+| Token           | Mix              | Resolves to | White on it |
+| --------------- | ---------------- | ----------- | ----------- |
+| `navy-hover`    | navy 92% + ink   | `#2125AA`   | 11.00 : 1   |
+| `navy-active`   | navy 85% + ink   | `#21249F`   | 11.55 : 1   |
+| `danger-hover`  | danger 92% + ink | `#982B2B`   | 7.73 : 1    |
+| `danger-active` | danger 85% + ink | `#8E2A2A`   | 8.35 : 1    |
+
+Encoded in `globals.css` as `color-mix`, so any future fill colour gets the same states without a new hex.
 
 ---
 
@@ -119,6 +132,19 @@ Nothing else. No `gap-[13px]`.
 
 Related elements sit closer. Unrelated elements sit further apart. That is how hierarchy is built here, before any border is considered.
 
+The scale governs layout gaps between things. Padding inside a fixed-height control is arithmetic, not a choice, and is not a reason to add 6px or 10px to this scale. A 36px input with 15/24 text has exactly 6px above and below.
+
+| Height | Line height | Vertical padding |
+| ------ | ----------- | ---------------- |
+| 32     | 20          | 6px              |
+| 36     | 24          | 6px              |
+| 40     | 24          | 8px              |
+| 44     | 24          | 10px             |
+
+Horizontal padding stays on the scale: 12px. Textareas have no fixed height, so they use the scale: 12px all round. That is the one place to normalise.
+
+These values live as `--control-height-*` and `--control-padding-*` in `globals.css`, not as `--spacing-*`. Do not write `p-[6px]` or `h-[44px]`.
+
 ---
 
 ## 5. Layout
@@ -161,17 +187,23 @@ Cards do not get shadows. Cards mostly do not get borders either — a card is a
 
 shadcn/ui provides the primitives in `components/ui/`. Do not fork them. Configure through tokens; compose in `components/bte/`.
 
-**Buttons** — heights 32 / 36 / 40. Variants: primary (navy fill, white text), secondary (border, ink text), ghost (no border), destructive (danger fill). One primary button per view. If two actions look equally important, one of them is not.
+**Buttons.** Heights 32 / 36 / 40, and 44 for touch contexts (section 12). Variants: primary (navy fill, white text), secondary (border, ink text), ghost (no border), destructive (danger fill). Hover and active use the derived tokens in section 2. One primary button per view. If two actions look equally important, one of them is not. Button is a restyled `components/ui/` primitive, not a `bte/` component.
 
-**Inputs** — 36px, 4px radius, real label above the field. Placeholder is never the label. Visible focus ring in navy. Error state shows a message, not just a red border.
+**Inputs.** 36px, 4px radius, real label above the field. Placeholder is never the label. Visible focus ring in navy. Error state shows a message, not just a red border.
 
-**Cards** — used when content is a distinct object that could stand alone. Not used to wrap every section.
+**Cards.** Used when content is a distinct object that could stand alone. Not used to wrap every section.
 
-**Tables** — the primary interface of this product. Navy header row, white text, mono uppercase labels. Row height 44px. Zebra striping in `surface`. Subtle hover. No vertical rules.
+**Tables.** The primary interface of this product. Navy header row, white text, mono uppercase labels. Row height 44px. Zebra striping in `surface`. Subtle hover. No vertical rules.
 
-**Badges** — 2px radius, mono 12px. Neutral by default.
+**Badges.** 2px radius, mono 12px / 18 line height, 2px padding each side (22px tall). Padding-based, not height-based. Neutral by default. An ember badge is approved: ink on ember is 6.71:1. White on ember is 2.59:1 and must never appear. The component hardcodes ink on the ember variant. Nobody can pass a text colour.
 
-**Empty states** — one line saying what would be here and one action. No illustration.
+**Empty states.** One line saying what would be here and one action. No illustration.
+
+**Page header.** Title, optional description, optional action, breadcrumbs folded in. No standalone breadcrumb component.
+
+**Shell.** Sidebar and app chrome live in `app/(platform)/layout.tsx`. Not a `bte/` component.
+
+**Ownership.** Restyle in `components/ui/`: Button, Input, Textarea, Label, Table, Badge, Toggle, ToggleGroup. Compose in `components/bte/`: FormField, DataTable, StatusBadge, EmptyState, PageHeader, Stepper, SegmentedControl, DefinitionList, FlagCard, StatTile, Chip, StepProgress, RosterRow. SegmentedControl wraps ToggleGroup. Chip wraps Toggle. FormField wraps Input, Textarea and Label. DataTable wraps Table. StatusBadge wraps Badge.
 
 ---
 

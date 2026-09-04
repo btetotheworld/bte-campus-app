@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#FFFFFF; color:#1A1A1A; font-family:Archivo, ui-sans-serif, system-ui, sans-serif; font-size:15px; line-height:24px; -webkit-font-smoothing:antialiased; }
+  a { color:#2226B7; text-decoration:none; }
+  a:hover { color:#1A1A1A; text-decoration:underline; }
+  input, textarea, button, select { font-family:inherit; color:#1A1A1A; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible, select:focus-visible { outline:2px solid #2226B7; outline-offset:2px; }
+  @keyframes bte-spin { to { transform:rotate(360deg); } }
+  @keyframes bte-pulse { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+</style>
+</helmet>
+
+<div style="max-width:1200px; margin:0 auto; padding:64px 32px; display:flex; flex-direction:column; gap:80px">
+
+  <header style="display:flex; flex-direction:column; gap:12px">
+    <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/</p>
+    <h1 style="margin:0; font-size:30px; line-height:38px; font-weight:600">Component vocabulary</h1>
+    <p style="margin:0; max-width:640px; font-size:16px; line-height:26px; color:#4A4A48">The pieces the meeting report screens are made of, extracted for <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">components/bte/</span>. Every interactive component shows default, hover, focus, active, disabled and loading; every data view shows populated, loading, empty and error. A component with only a default state is not finished.</p>
+    <div style="display:flex; flex-direction:column; gap:8px; padding:16px; background:#F7F7F5; border-radius:4px; max-width:640px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Two values not in the system yet — provisional</p>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">DESIGN_SYSTEM.md fixes navy but names no hover or pressed shade, and no disabled treatment. Used here: hover <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">#2125AA</span> and pressed <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">#21249F</span> (navy mixed 8% / 15% toward ink — same hue, no new colour), and disabled as <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">surface-2</span> fill with <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px">ink-muted</span> text. Both need brand sign-off or a token added by the foundation owner.</p>
+    </div>
+  </header>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:4px; border-bottom:1px solid #E2E2DE; padding-bottom:12px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/Button.tsx</p>
+      <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Button</h2>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Heights 32 / 36 / 40, and 44 for anything a thumb has to hit on a phone. One primary per view.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:120px 1fr 1fr 1fr; gap:16px 24px; align-items:center">
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">State</span>
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Primary</span>
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Secondary</span>
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Ghost</span>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Default</span>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#2125AA" style-active="background:#21249F">File report</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5" style-active="background:#EFEFEC">Save draft</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 12px; border:0; border-radius:4px; background:transparent; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5" style-active="background:#EFEFEC">Cancel</button>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Hover</span>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#2125AA; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">File report</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#F7F7F5; font-size:15px; cursor:pointer">Save draft</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 12px; border:0; border-radius:4px; background:#F7F7F5; font-size:15px; cursor:pointer">Cancel</button>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Focus</span>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; outline:2px solid #2226B7; outline-offset:2px">File report</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer; outline:2px solid #2226B7; outline-offset:2px">Save draft</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 12px; border:0; border-radius:4px; background:transparent; font-size:15px; cursor:pointer; outline:2px solid #2226B7; outline-offset:2px">Cancel</button>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Active</span>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#21249F; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">File report</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#EFEFEC; font-size:15px; cursor:pointer">Save draft</button>
+      <button type="button" style="justify-self:start; height:36px; padding:0 12px; border:0; border-radius:4px; background:#EFEFEC; font-size:15px; cursor:pointer">Cancel</button>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Disabled</span>
+      <button type="button" disabled style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#EFEFEC; color:#6B6B6B; font-size:15px; font-weight:600; cursor:not-allowed">File report</button>
+      <button type="button" disabled style="justify-self:start; height:36px; padding:0 16px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#6B6B6B; font-size:15px; cursor:not-allowed">Save draft</button>
+      <button type="button" disabled style="justify-self:start; height:36px; padding:0 12px; border:0; border-radius:4px; background:transparent; color:#6B6B6B; font-size:15px; cursor:not-allowed">Cancel</button>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Loading</span>
+      <button type="button" disabled style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:progress; display:inline-flex; align-items:center; gap:8px">
+        <span style="width:16px; height:16px; border-radius:9999px; border:2px solid rgba(255,255,255,0.35); border-top-color:#FFFFFF; animation:bte-spin 800ms linear infinite"></span>
+        Filing
+      </button>
+      <button type="button" disabled style="justify-self:start; height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; color:#4A4A48; font-size:15px; cursor:progress; display:inline-flex; align-items:center; gap:8px">
+        <span style="width:16px; height:16px; border-radius:9999px; border:2px solid #E2E2DE; border-top-color:#2226B7; animation:bte-spin 800ms linear infinite"></span>
+        Saving
+      </button>
+      <span style="font-size:13px; line-height:20px; color:#6B6B6B">Ghost has no loading state — it is never the action that commits.</span>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Destructive</span>
+      <button type="button" style="justify-self:start; height:36px; padding:0 16px; border:0; border-radius:4px; background:#A32D2D; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#8F2828">Withdraw chapter</button>
+      <span style="grid-column:span 2; font-size:13px; line-height:20px; color:#6B6B6B">Danger fill, and only behind a confirmation.</span>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:4px; border-bottom:1px solid #E2E2DE; padding-bottom:12px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/FormField.tsx</p>
+      <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Form field</h2>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Real label above the field, always. Placeholder is never the label. Error shows a message, not just a red border.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:120px 320px 320px; gap:32px 24px; align-items:start">
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">State</span>
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Input</span>
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Textarea</span>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Default</span>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-1" style="font-size:13px; line-height:20px; font-weight:600">Practitioner block</label>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Who ran it, and what they covered.</p>
+        <input id="f-1" type="text" placeholder="Name and topic" style="height:36px; padding:0 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; font-size:15px; width:100%; box-sizing:border-box; transition:border-color 150ms cubic-bezier(0,0,0.2,1)" style-hover="border-color:#C9C9C4">
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-2" style="font-size:13px; line-height:20px; font-weight:600">Blocked</label>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Who is stuck, and on what.</p>
+        <textarea id="f-2" rows="2" placeholder="Name and blocker" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:vertical"></textarea>
+      </div>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Filled · hover</span>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-3" style="font-size:13px; line-height:20px; font-weight:600">Practitioner block</label>
+        <input id="f-3" type="text" value="Amaka O. — shipping a Next.js form" style="height:36px; padding:0 12px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; width:100%; box-sizing:border-box">
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-4" style="font-size:13px; line-height:20px; font-weight:600">Blocked</label>
+        <textarea id="f-4" rows="2" style="padding:10px 12px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:vertical">Chidi — deploy keeps failing on env vars</textarea>
+      </div>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Focus</span>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-5" style="font-size:13px; line-height:20px; font-weight:600">Practitioner block</label>
+        <input id="f-5" type="text" value="Amaka O." style="height:36px; padding:0 12px; border:1px solid #2226B7; border-radius:4px; background:#FFFFFF; font-size:15px; width:100%; box-sizing:border-box; outline:2px solid #2226B7; outline-offset:2px">
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-6" style="font-size:13px; line-height:20px; font-weight:600">Blocked</label>
+        <textarea id="f-6" rows="2" style="padding:10px 12px; border:1px solid #2226B7; border-radius:4px; background:#FFFFFF; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:vertical; outline:2px solid #2226B7; outline-offset:2px">Chidi — deploy failing</textarea>
+      </div>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Error</span>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-7" style="font-size:13px; line-height:20px; font-weight:600">First timers</label>
+        <input id="f-7" type="text" value="31" aria-invalid="true" aria-describedby="f-7-err" style="height:36px; padding:0 12px; border:1px solid #A32D2D; border-radius:4px; background:#FFFFFF; font-size:15px; width:100%; box-sizing:border-box">
+        <p id="f-7-err" style="margin:0; font-size:13px; line-height:20px; color:#A32D2D">First timers cannot be more than the 24 people present.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-8" style="font-size:13px; line-height:20px; font-weight:600">What shortened the Shift?</label>
+        <textarea id="f-8" rows="2" aria-invalid="true" aria-describedby="f-8-err" style="padding:10px 12px; border:1px solid #A32D2D; border-radius:4px; background:#FFFFFF; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:vertical"></textarea>
+        <p id="f-8-err" style="margin:0; font-size:13px; line-height:20px; color:#A32D2D">A shortened Shift needs a reason. Anything true is fine.</p>
+      </div>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Disabled</span>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-9" style="font-size:13px; line-height:20px; font-weight:600; color:#6B6B6B">Attendance total</label>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Counted from the roster on the previous screen.</p>
+        <input id="f-9" type="text" value="24" disabled style="height:36px; padding:0 12px; border:1px solid #E2E2DE; border-radius:4px; background:#F7F7F5; color:#6B6B6B; font-size:15px; width:100%; box-sizing:border-box; cursor:not-allowed">
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <label for="f-10" style="font-size:13px; line-height:20px; font-weight:600; color:#6B6B6B">Coordinator flags</label>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Locked once the coordinator has read them.</p>
+        <textarea id="f-10" rows="2" disabled style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; background:#F7F7F5; color:#6B6B6B; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none; cursor:not-allowed">Room booking is the recurring problem</textarea>
+      </div>
+
+      <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">Loading</span>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <span style="width:120px; height:20px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+        <span style="height:36px; border-radius:4px; background:#F7F7F5; border:1px solid #E2E2DE; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <span style="width:88px; height:20px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+        <span style="height:68px; border-radius:4px; background:#F7F7F5; border:1px solid #E2E2DE; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px; padding-top:8px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Field variants used by the meeting report</p>
+      <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start">
+        <div style="display:flex; flex-direction:column; gap:8px; width:320px">
+          <label style="font-size:13px; line-height:20px; font-weight:600">Attendance</label>
+          <div style="display:flex; align-items:stretch; border:1px solid #E2E2DE; border-radius:4px; height:44px; width:180px">
+            <button type="button" aria-label="Decrease" style="width:44px; border:0; border-right:1px solid #E2E2DE; background:#F7F7F5; font-size:18px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#EFEFEC">−</button>
+            <span style="flex:1; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:600">24</span>
+            <button type="button" aria-label="Increase" style="width:44px; border:0; border-left:1px solid #E2E2DE; background:#F7F7F5; font-size:18px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#EFEFEC">+</button>
+          </div>
+          <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Stepper — 44px targets, no keyboard needed.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; width:320px">
+          <label style="font-size:13px; line-height:20px; font-weight:600">Did the Shift run?</label>
+          <div style="display:flex; border:1px solid #E2E2DE; border-radius:4px; overflow:hidden">
+            <button type="button" style="flex:1; height:44px; border:0; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5">Full</button>
+            <button type="button" aria-pressed="true" style="flex:1; height:44px; border:0; border-left:1px solid #E2E2DE; border-right:1px solid #E2E2DE; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Shortened</button>
+            <button type="button" style="flex:1; height:44px; border:0; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5">Missed</button>
+          </div>
+          <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Segmented choice — navy marks the selection, never ember.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:4px; border-bottom:1px solid #E2E2DE; padding-bottom:12px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/DataTable.tsx</p>
+      <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Data table</h2>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">The primary interface of this product. Navy header, white text, mono uppercase labels, 44px rows, zebra in surface, no vertical rules.</p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:8px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Populated · row hover on the second row</p>
+      <table style="width:100%; border-collapse:collapse; border-radius:4px; overflow:hidden">
+        <thead>
+          <tr style="background:#2226B7">
+            <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Meeting</th>
+            <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Scheduled</th>
+            <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Filed</th>
+            <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Gap</th>
+            <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Shift</th>
+            <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#EFEFEC">
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Meeting 4</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">18 SEP 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6B6B6B">—</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#6B6B6B">—</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; color:#6B6B6B">—</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#4A4A48; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">SCHEDULED</span></td>
+          </tr>
+          <tr style="background:#EFEFEC">
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Meeting 3</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">04 SEP 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">04 SEP 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">SAME DAY</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Full</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#0F6E56; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">FILED</span></td>
+          </tr>
+          <tr>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Meeting 2</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">21 AUG 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">02 SEP 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#854F0B">12 DAYS LATE</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Shortened</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#854F0B; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">FILED LATE</span></td>
+          </tr>
+          <tr style="background:#F7F7F5">
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Meeting 1</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">07 AUG 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">07 AUG 2026</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">SAME DAY</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE">Full</td>
+            <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#0F6E56; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">FILED</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Sortable header cells get a 16px chevron and a hover fill one step darker than navy; the label stays mono uppercase.</p>
+    </div>
+
+    <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start">
+      <div style="flex:1; min-width:320px; display:flex; flex-direction:column; gap:8px">
+        <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Loading</p>
+        <table style="width:100%; border-collapse:collapse; border-radius:4px; overflow:hidden">
+          <thead>
+            <tr style="background:#2226B7">
+              <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Meeting</th>
+              <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Filed</th>
+              <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:72px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:88px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:56px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td></tr>
+            <tr style="background:#F7F7F5"><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:64px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:80px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:48px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td></tr>
+            <tr><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:80px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:72px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td><td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE"><span style="display:block; width:56px; height:12px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span></td></tr>
+          </tbody>
+        </table>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Header renders immediately; three skeleton rows, never a spinner in place of the table.</p>
+      </div>
+
+      <div style="flex:1; min-width:320px; display:flex; flex-direction:column; gap:8px">
+        <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Error</p>
+        <table style="width:100%; border-collapse:collapse; border-radius:4px; overflow:hidden">
+          <thead>
+            <tr style="background:#2226B7">
+              <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Meeting</th>
+              <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Filed</th>
+              <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="3" style="padding:24px 16px; border-bottom:1px solid #E2E2DE">
+              <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+                <p style="margin:0; font-size:15px; line-height:24px; color:#A32D2D">These meetings could not be loaded.</p>
+                <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Nothing was lost. Your connection dropped mid-request.</p>
+                <button type="button" style="height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5">Try again</button>
+              </div>
+            </td></tr>
+          </tbody>
+        </table>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Error lives inside the table, so the page around it stays usable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:4px; border-bottom:1px solid #E2E2DE; padding-bottom:12px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/EmptyState.tsx</p>
+      <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Empty state</h2>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">One line saying what would be here, and one action. No illustration.</p>
+    </div>
+
+    <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start">
+      <div style="flex:1; min-width:320px; display:flex; flex-direction:column; gap:8px">
+        <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Nothing yet — action available</p>
+        <div style="padding:48px 24px; background:#F7F7F5; border-radius:4px; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+          <p style="margin:0; font-size:16px; line-height:26px">No reports filed for this term yet.</p>
+          <button type="button" style="height:36px; padding:0 16px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#2125AA">File the first one</button>
+        </div>
+      </div>
+      <div style="flex:1; min-width:320px; display:flex; flex-direction:column; gap:8px">
+        <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Nothing yet — no action for this role</p>
+        <div style="padding:48px 24px; background:#F7F7F5; border-radius:4px; display:flex; flex-direction:column; gap:8px; align-items:flex-start">
+          <p style="margin:0; font-size:16px; line-height:26px">No unread flags across your chapters.</p>
+          <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Flags appear here the moment a lead files one.</p>
+        </div>
+      </div>
+      <div style="flex:1; min-width:320px; display:flex; flex-direction:column; gap:8px">
+        <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Filtered to nothing</p>
+        <div style="padding:48px 24px; background:#F7F7F5; border-radius:4px; display:flex; flex-direction:column; gap:12px; align-items:flex-start">
+          <p style="margin:0; font-size:16px; line-height:26px">No chapters match <span style="font-weight:600">missed Shift</span> in Term 1.</p>
+          <button type="button" style="height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#EFEFEC">Clear filters</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:4px; border-bottom:1px solid #E2E2DE; padding-bottom:12px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/StatusBadge.tsx</p>
+      <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Status badge</h2>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">2px radius, mono 12px, neutral by default. Semantic colour only when it carries meaning — and the word carries it too, so colour is never alone.</p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#4A4A48; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">SCHEDULED</span>
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#0F6E56; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">FILED</span>
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#854F0B; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">FILED LATE</span>
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#A32D2D; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">NOT FILED</span>
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">UNREAD FLAG</span>
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#FE7C09; color:#1A1A1A; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">SHIFT MISSED</span>
+        <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#4A4A48; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">DRAFT</span>
+        <span style="display:inline-flex; align-items:center; gap:4px; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#4A4A48; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">
+          <span style="width:10px; height:10px; border-radius:9999px; border:2px solid #C9C9C4; border-top-color:#4A4A48; animation:bte-spin 800ms linear infinite"></span>
+          SENDING
+        </span>
+      </div>
+      <p style="margin:0; max-width:640px; font-size:13px; line-height:20px; color:#4A4A48">A badge is not interactive, so it has no hover, focus or active state — if a status needs to be clickable, it is a button with a badge inside it, not a badge with a click handler. <span style="font-weight:600">Shift missed</span> is the only ember badge, and it is the one place ember earns its place: ink on an ember fill, one accent, and the word says it too. Only one ember badge may appear on a screen.</p>
+    </div>
+  </section>
+
+  <section style="display:flex; flex-direction:column; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:4px; border-bottom:1px solid #E2E2DE; padding-bottom:12px">
+      <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">components/bte/PageHeader.tsx</p>
+      <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Page header</h2>
+      <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Mono eyebrow, h1 title, optional one-line description, at most one primary action. Spacing separates it from content — no bottom border by default.</p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:32px">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px">
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Campus · Meetings</p>
+          <h1 style="margin:0; font-size:30px; line-height:38px; font-weight:600">Kaduna Polytechnic</h1>
+          <p style="margin:0; max-width:640px; font-size:16px; line-height:26px; color:#4A4A48">Term 1, 2026/27. Four dates published.</p>
+        </div>
+        <div style="display:flex; gap:8px; flex-shrink:0">
+          <button type="button" style="height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5">Schedule</button>
+          <button type="button" style="height:36px; padding:0 16px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#2125AA">File report</button>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px">
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <div style="display:flex; align-items:center; gap:8px">
+            <a href="#" style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Meetings</a>
+            <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#C9C9C4">/</span>
+            <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Meeting 3</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px">
+            <h1 style="margin:0; font-size:30px; line-height:38px; font-weight:600">Meeting 3 report</h1>
+            <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#EFEFEC; color:#0F6E56; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">FILED</span>
+          </div>
+          <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">FILED 04 SEP 2026, 18:12 BY AMAKA O. · SAME DAY AS THE MEETING</p>
+        </div>
+        <button type="button" style="flex-shrink:0; height:36px; padding:0 16px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1)" style-hover="background:#F7F7F5">Edit</button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Loading</p>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px">
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <span style="display:block; width:140px; height:18px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+            <span style="display:block; width:320px; height:38px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+            <span style="display:block; width:240px; height:20px; border-radius:2px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+          </div>
+          <span style="display:block; width:112px; height:36px; border-radius:4px; background:#EFEFEC; animation:bte-pulse 1.2s ease-in-out infinite"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+</body>
+</html>

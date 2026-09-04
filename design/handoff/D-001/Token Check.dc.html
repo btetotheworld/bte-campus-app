@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#FFFFFF; color:#1A1A1A; font-family:Archivo, ui-sans-serif, system-ui, sans-serif; font-size:15px; line-height:24px; -webkit-font-smoothing:antialiased; }
+  a { color:#2226B7; }
+  a:hover { color:#1A1A1A; }
+  input:focus-visible, button:focus-visible { outline:2px solid #2226B7; outline-offset:2px; }
+</style>
+</helmet>
+<div style="padding:64px 32px; max-width:1200px; margin:0 auto; display:flex; flex-direction:column; gap:48px">
+
+  <div style="display:flex; flex-direction:column; gap:16px">
+    <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Primary button</p>
+    <button type="button" style="height:36px; padding:0 16px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-family:Archivo, sans-serif; font-size:15px; line-height:24px; font-weight:600; cursor:pointer; transition:background 150ms cubic-bezier(0,0,0.2,1); align-self:flex-start" style-hover="background:#1B1E92">File report</button>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:16px">
+    <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Text input</p>
+    <div style="display:flex; flex-direction:column; gap:8px; max-width:360px">
+      <label for="tc-input" style="font-size:13px; line-height:20px; font-weight:600; color:#1A1A1A">Attendance total</label>
+      <input id="tc-input" type="text" value="24" style="height:36px; padding:0 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-family:Archivo, sans-serif; font-size:15px; line-height:24px; width:100%; box-sizing:border-box">
+    </div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:16px">
+    <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Table header row</p>
+    <table style="width:100%; border-collapse:collapse; border-radius:4px; overflow:hidden; max-width:840px">
+      <thead>
+        <tr style="background:#2226B7">
+          <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Meeting</th>
+          <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Scheduled</th>
+          <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Filed</th>
+          <th style="height:44px; text-align:left; padding:0 16px; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em">Shift</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-size:15px">Meeting 3</td>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">04 SEP 2026</td>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">04 SEP 2026</td>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-size:15px">Full</td>
+        </tr>
+        <tr style="background:#F7F7F5">
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-size:15px">Meeting 2</td>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">21 AUG 2026</td>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; color:#4A4A48">23 AUG 2026</td>
+          <td style="height:44px; padding:0 16px; border-bottom:1px solid #E2E2DE; font-size:15px">Shortened</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

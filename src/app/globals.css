@@ -36,6 +36,31 @@
   --color-warning: #854f0b;
   --color-danger: #a32d2d;
 
+  /* Interaction states. Derived, not chosen: base mixed 8% and 15% toward ink.
+     Vocabulary file values, not Token Check. #1B1E92 is the wrong derivation.
+     navy-hover #2125AA (white 11.00:1)   navy-active #21249F (11.55:1)
+     danger-hover #982B2B (7.73:1)        danger-active #8E2A2A (8.35:1) */
+  --color-navy-hover: color-mix(
+    in oklab,
+    var(--color-navy) 92%,
+    var(--color-ink)
+  );
+  --color-navy-active: color-mix(
+    in oklab,
+    var(--color-navy) 85%,
+    var(--color-ink)
+  );
+  --color-danger-hover: color-mix(
+    in oklab,
+    var(--color-danger) 92%,
+    var(--color-ink)
+  );
+  --color-danger-active: color-mix(
+    in oklab,
+    var(--color-danger) 85%,
+    var(--color-ink)
+  );
+
   /* ---- Spacing -----------------------------------------------------------
      v4 generates a dynamic scale from --spacing. Killing it and declaring
      each step means p-7 and gap-[13px] are not classes that exist.          */
@@ -132,6 +157,19 @@
     --destructive-foreground: var(--color-white);
     --input: var(--color-border);
     --ring: var(--color-navy);
+
+    /* Control metrics. Not spacing-scale steps. Vertical padding is
+       height minus line-height. Horizontal padding is 12px. Textareas
+       have no fixed height and use the scale: 12px all round. */
+    --control-height-sm: 32px;
+    --control-height: 36px;
+    --control-height-lg: 40px;
+    --control-height-touch: 44px;
+    --control-padding-y-sm: 6px;
+    --control-padding-y: 6px;
+    --control-padding-y-lg: 8px;
+    --control-padding-y-touch: 10px;
+    --control-padding-x: 12px;
   }
 
   * {

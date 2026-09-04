@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#EFEFEC; color:#1A1A1A; font-family:Archivo, ui-sans-serif, system-ui, sans-serif; font-size:15px; line-height:24px; -webkit-font-smoothing:antialiased; }
+  a { color:#2226B7; text-decoration:none; }
+  a:hover { color:#1A1A1A; text-decoration:underline; }
+  input:focus-visible, button:focus-visible, textarea:focus-visible { outline:2px solid #2226B7; outline-offset:2px; }
+  input, textarea, button { font-family:inherit; color:#1A1A1A; }
+</style>
+</helmet>
+
+<section style="padding:64px 32px; display:flex; flex-direction:column; gap:32px">
+
+  <div style="max-width:1200px; display:flex; flex-direction:column; gap:12px">
+    <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Meetings slice · Turn 1</p>
+    <h1 style="margin:0; font-size:30px; line-height:38px; font-weight:600">File a report — three layouts</h1>
+    <p style="margin:0; max-width:640px; font-size:16px; line-height:26px; color:#4A4A48">Filed by a student on a phone, in a hall, on bad signal, in under three minutes. Same five fields, same Shift confirmation, same optional flags box in all three. Navy, ember, neutrals only; 4px maximum radius.</p>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:32px; align-items:flex-start">
+
+    <div id="1a" style="display:flex; flex-direction:column; gap:16px; width:390px">
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; letter-spacing:0.08em">1A</span>
+          <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Single scroll</h2>
+        </div>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48"><strong style="font-weight:600">Optimises for</strong> seeing the whole ask at once — a lead can scan it before the room empties and knows exactly how long this will take.</p>
+        <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48"><strong style="font-weight:600">Gives up</strong> focus. Five open text fields on one screen invite one-word answers, and the keyboard covers half the form on every tap.</p>
+      </div>
+
+      <div style="width:390px; background:#FFFFFF; border:1px solid #C9C9C4; border-radius:4px; overflow:hidden">
+        <div style="height:24px; background:#F7F7F5; border-bottom:1px solid #E2E2DE; display:flex; align-items:center; justify-content:space-between; padding:0 16px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">
+          <span>9:41</span><span>No signal</span>
+        </div>
+
+        <div style="padding:16px; border-bottom:1px solid #E2E2DE; display:flex; flex-direction:column; gap:4px">
+          <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Meeting 3 · Term 1</p>
+          <h3 style="margin:0; font-size:18px; line-height:26px; font-weight:600">File report</h3>
+          <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Held today, 4 Sep. Five fields, then the Shift.</p>
+        </div>
+
+        <div style="padding:16px; display:flex; flex-direction:column; gap:24px">
+
+          <div style="display:flex; flex-direction:column; gap:12px">
+            <label style="font-size:13px; line-height:20px; font-weight:600">Attendance</label>
+            <div style="display:flex; gap:12px">
+              <div style="flex:1; display:flex; flex-direction:column; gap:4px">
+                <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Total</span>
+                <div style="display:flex; align-items:stretch; border:1px solid #E2E2DE; border-radius:4px; height:44px">
+                  <button type="button" aria-label="Decrease total" style="width:44px; border:0; border-right:1px solid #E2E2DE; background:#F7F7F5; color:#1A1A1A; font-size:18px; cursor:pointer">−</button>
+                  <span style="flex:1; display:flex; align-items:center; justify-content:center; font-size:18px; line-height:26px; font-weight:600">24</span>
+                  <button type="button" aria-label="Increase total" style="width:44px; border:0; border-left:1px solid #E2E2DE; background:#F7F7F5; color:#1A1A1A; font-size:18px; cursor:pointer">+</button>
+                </div>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; gap:4px">
+                <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">First timers</span>
+                <div style="display:flex; align-items:stretch; border:1px solid #E2E2DE; border-radius:4px; height:44px">
+                  <button type="button" aria-label="Decrease first timers" style="width:44px; border:0; border-right:1px solid #E2E2DE; background:#F7F7F5; color:#1A1A1A; font-size:18px; cursor:pointer">−</button>
+                  <span style="flex:1; display:flex; align-items:center; justify-content:center; font-size:18px; line-height:26px; font-weight:600">3</span>
+                  <button type="button" aria-label="Increase first timers" style="width:44px; border:0; border-left:1px solid #E2E2DE; background:#F7F7F5; color:#1A1A1A; font-size:18px; cursor:pointer">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <label for="a-block" style="font-size:13px; line-height:20px; font-weight:600">Practitioner block</label>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Who ran it, and what they covered.</p>
+            <input id="a-block" type="text" value="Amaka O. — shipping a Next.js form" style="height:44px; padding:0 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; width:100%; box-sizing:border-box">
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <label for="a-demos" style="font-size:13px; line-height:20px; font-weight:600">Demonstrators</label>
+            <textarea id="a-demos" rows="2" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none">Ibrahim S., Tolu A.</textarea>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <label for="a-blocked" style="font-size:13px; line-height:20px; font-weight:600">Blocked</label>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Who is stuck, and on what.</p>
+            <textarea id="a-blocked" rows="2" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none">Chidi — deploy keeps failing on env vars</textarea>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <label for="a-subs" style="font-size:13px; line-height:20px; font-weight:600">Submissions noted</label>
+            <textarea id="a-subs" rows="2" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none">Two teams say they will submit before term end</textarea>
+          </div>
+
+          <div style="height:1px; background:#E2E2DE"></div>
+
+          <div style="display:flex; flex-direction:column; gap:12px">
+            <label style="font-size:13px; line-height:20px; font-weight:600">Did the Shift run?</label>
+            <div style="display:flex; border:1px solid #E2E2DE; border-radius:4px; overflow:hidden">
+              <button type="button" style="flex:1; height:44px; border:0; background:#FFFFFF; color:#1A1A1A; font-size:15px; cursor:pointer">Full</button>
+              <button type="button" aria-pressed="true" style="flex:1; height:44px; border:0; border-left:1px solid #E2E2DE; border-right:1px solid #E2E2DE; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Shortened</button>
+              <button type="button" style="flex:1; height:44px; border:0; background:#FFFFFF; color:#1A1A1A; font-size:15px; cursor:pointer">Missed</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; padding:12px; background:#F7F7F5; border-radius:4px">
+              <label for="a-reason" style="font-size:13px; line-height:20px; font-weight:600">What shortened it?</label>
+              <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Rooms get taken and lectures overrun. Say what happened — nobody is marked down for this.</p>
+              <textarea id="a-reason" rows="2" placeholder="Hall was needed at 6, we ran the last two prompts" style="padding:10px 12px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none"></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <label for="a-flags" style="font-size:13px; line-height:20px; font-weight:600">Anything for your coordinator? <span style="font-weight:400; color:#6B6B6B">Optional</span></label>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Blank is a normal answer.</p>
+            <textarea id="a-flags" rows="2" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none"></textarea>
+          </div>
+        </div>
+
+        <div style="position:sticky; bottom:0; padding:16px; background:#FFFFFF; border-top:1px solid #E2E2DE; display:flex; flex-direction:column; gap:8px">
+          <button type="button" style="height:44px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">File report</button>
+          <p style="margin:0; text-align:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">SAVED ON THIS PHONE · SENDS WHEN YOU HAVE SIGNAL</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="1b" style="display:flex; flex-direction:column; gap:16px; width:822px">
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; letter-spacing:0.08em">1B</span>
+          <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Stepped flow</h2>
+        </div>
+        <p style="margin:0; max-width:640px; font-size:13px; line-height:20px; color:#4A4A48"><strong style="font-weight:600">Optimises for</strong> answer quality. One question fills the screen above the keyboard, so the honest sentence gets typed instead of a shrug, and each step commits on its own — a dropped connection at step 5 loses nothing.</p>
+        <p style="margin:0; max-width:640px; font-size:13px; line-height:20px; color:#4A4A48"><strong style="font-weight:600">Gives up</strong> the sense of an end. Seven taps to advance and no view of the whole, so it feels longer than 1A even when it is faster, and a lead cannot skip to the one field they came back to fix.</p>
+      </div>
+
+      <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start">
+
+        <div style="width:258px; background:#FFFFFF; border:1px solid #C9C9C4; border-radius:4px; display:flex; flex-direction:column">
+          <div style="height:24px; background:#F7F7F5; border-bottom:1px solid #E2E2DE; display:flex; align-items:center; justify-content:space-between; padding:0 16px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B"><span>9:41</span><span>No signal</span></div>
+          <div style="padding:16px; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; gap:4px">
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+            </div>
+            <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Step 1 of 7</p>
+          </div>
+          <div style="padding:0 16px 24px; display:flex; flex-direction:column; gap:20px; flex:1">
+            <h3 style="margin:0; font-size:22px; line-height:30px; font-weight:600">How many were in the room?</h3>
+            <div style="display:flex; align-items:stretch; border:1px solid #E2E2DE; border-radius:4px; height:44px">
+              <button type="button" aria-label="Decrease" style="width:44px; border:0; border-right:1px solid #E2E2DE; background:#F7F7F5; font-size:18px; cursor:pointer">−</button>
+              <span style="flex:1; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:600">24</span>
+              <button type="button" aria-label="Increase" style="width:44px; border:0; border-left:1px solid #E2E2DE; background:#F7F7F5; font-size:18px; cursor:pointer">+</button>
+            </div>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Last meeting: 21. Roster: 31.</p>
+          </div>
+          <div style="padding:16px; border-top:1px solid #E2E2DE; display:flex; flex-direction:column; gap:8px">
+            <button type="button" style="height:44px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Next</button>
+            <p style="margin:0; text-align:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">SAVED AFTER EVERY STEP</p>
+          </div>
+        </div>
+
+        <div style="width:258px; background:#FFFFFF; border:1px solid #C9C9C4; border-radius:4px; display:flex; flex-direction:column">
+          <div style="height:24px; background:#F7F7F5; border-bottom:1px solid #E2E2DE; display:flex; align-items:center; justify-content:space-between; padding:0 16px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B"><span>9:43</span><span>No signal</span></div>
+          <div style="padding:16px; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; gap:4px">
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between">
+              <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Step 4 of 7</p>
+              <a href="#1b" style="font-size:13px; line-height:20px; color:#2226B7">Back</a>
+            </div>
+          </div>
+          <div style="padding:0 16px 24px; display:flex; flex-direction:column; gap:12px; flex:1">
+            <h3 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Who is blocked?</h3>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Name and what is stopping them. This is the field coordinators act on.</p>
+            <textarea rows="4" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none">Chidi — deploy keeps failing on env vars</textarea>
+            <div style="display:flex; gap:8px; flex-wrap:wrap">
+              <button type="button" style="height:32px; padding:0 12px; border:1px solid #E2E2DE; border-radius:2px; background:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer">Chidi</button>
+              <button type="button" style="height:32px; padding:0 12px; border:1px solid #E2E2DE; border-radius:2px; background:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer">Tolu</button>
+              <button type="button" style="height:32px; padding:0 12px; border:1px solid #E2E2DE; border-radius:2px; background:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer">Nobody</button>
+            </div>
+          </div>
+          <div style="padding:16px; border-top:1px solid #E2E2DE; display:flex; flex-direction:column; gap:8px">
+            <button type="button" style="height:44px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Next</button>
+          </div>
+        </div>
+
+        <div style="width:258px; background:#FFFFFF; border:1px solid #C9C9C4; border-radius:4px; display:flex; flex-direction:column">
+          <div style="height:24px; background:#F7F7F5; border-bottom:1px solid #E2E2DE; display:flex; align-items:center; justify-content:space-between; padding:0 16px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B"><span>9:45</span><span>No signal</span></div>
+          <div style="padding:16px; display:flex; flex-direction:column; gap:8px">
+            <div style="display:flex; gap:4px">
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#2226B7"></div>
+              <div style="flex:1; height:4px; background:#E2E2DE"></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between">
+              <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Step 6 of 7</p>
+              <a href="#1b" style="font-size:13px; line-height:20px; color:#2226B7">Back</a>
+            </div>
+          </div>
+          <div style="padding:0 16px 24px; display:flex; flex-direction:column; gap:12px; flex:1">
+            <h3 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Did the Shift run?</h3>
+            <div style="display:flex; flex-direction:column; gap:8px">
+              <button type="button" style="height:44px; padding:0 12px; text-align:left; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer">Full</button>
+              <button type="button" aria-pressed="true" style="height:44px; padding:0 12px; text-align:left; border:1px solid #2226B7; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Shortened</button>
+              <button type="button" style="height:44px; padding:0 12px; text-align:left; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; font-size:15px; cursor:pointer">Missed</button>
+            </div>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Next screen asks what shortened it. Halls get taken — say what happened.</p>
+          </div>
+          <div style="padding:16px; border-top:1px solid #E2E2DE; display:flex; flex-direction:column; gap:8px">
+            <button type="button" style="height:44px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="1c" style="display:flex; flex-direction:column; gap:16px; width:822px">
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="display:inline-flex; align-items:center; height:22px; padding:0 8px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; letter-spacing:0.08em">1C</span>
+          <h2 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Roster tap, then one review screen</h2>
+        </div>
+        <p style="margin:0; max-width:640px; font-size:13px; line-height:20px; color:#4A4A48"><strong style="font-weight:600">Optimises for</strong> not typing. The first screen is the roster: tap who was there, then long-press-free chips mark who ran the block, who demoed and who is stuck. Attendance and first timers are counted, not entered, and four of the five fields arrive as names. The second screen is the whole report as a review list — the only writing left is the Shift reason and the optional flags box.</p>
+        <p style="margin:0; max-width:640px; font-size:13px; line-height:20px; color:#4A4A48"><strong style="font-weight:600">Gives up</strong> nuance and correctness at the edges. Names are not sentences, so &ldquo;Chidi&rdquo; replaces &ldquo;Chidi, stuck on env vars for three weeks&rdquo; unless the lead opens the row. It also depends on the roster being current, so a chapter with a stale roster gets a worse form than 1A gives them, and guests who never joined the roster have to be added on the spot.</p>
+      </div>
+
+      <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start">
+
+        <div style="width:390px; background:#FFFFFF; border:1px solid #C9C9C4; border-radius:4px; display:flex; flex-direction:column">
+          <div style="height:24px; background:#F7F7F5; border-bottom:1px solid #E2E2DE; display:flex; align-items:center; justify-content:space-between; padding:0 16px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B"><span>9:41</span><span>No signal</span></div>
+          <div style="padding:16px; border-bottom:1px solid #E2E2DE; display:flex; flex-direction:column; gap:4px">
+            <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Meeting 3 · Step 1 of 2</p>
+            <h3 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Who was there?</h3>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Tap a name to mark present. Tap a role to say what they did.</p>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:8px; padding:12px 16px; background:#F7F7F5; border-bottom:1px solid #E2E2DE">
+            <span style="font-size:30px; line-height:38px; font-weight:600">24</span>
+            <span style="font-size:13px; line-height:20px; color:#4A4A48">present of 31 · 3 first timers</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column">
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE">
+              <span style="width:24px; height:24px; border-radius:4px; background:#2226B7; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:13px">✓</span>
+              <span style="flex:1; font-size:15px">Amaka O.</span>
+              <span style="display:inline-flex; align-items:center; height:32px; padding:0 12px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">RAN BLOCK</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE; background:#F7F7F5">
+              <span style="width:24px; height:24px; border-radius:4px; background:#2226B7; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:13px">✓</span>
+              <span style="flex:1; font-size:15px">Ibrahim S.</span>
+              <span style="display:inline-flex; align-items:center; height:32px; padding:0 12px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">DEMOED</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE">
+              <span style="width:24px; height:24px; border-radius:4px; background:#2226B7; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:13px">✓</span>
+              <span style="flex:1; font-size:15px">Tolu A.</span>
+              <span style="display:inline-flex; align-items:center; height:32px; padding:0 12px; border-radius:2px; background:#2226B7; color:#FFFFFF; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">DEMOED</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE; background:#F7F7F5">
+              <span style="width:24px; height:24px; border-radius:4px; background:#2226B7; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:13px">✓</span>
+              <span style="flex:1; font-size:15px">Chidi E.</span>
+              <span style="display:inline-flex; align-items:center; height:32px; padding:0 12px; border-radius:2px; background:#FE7C09; color:#1A1A1A; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em">BLOCKED</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE">
+              <span style="width:24px; height:24px; border-radius:4px; background:#2226B7; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:13px">✓</span>
+              <span style="flex:1; font-size:15px">Grace N.</span>
+              <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#6B6B6B">Add role</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE; background:#F7F7F5">
+              <span style="width:24px; height:24px; border-radius:4px; border:1px solid #C9C9C4; background:#FFFFFF"></span>
+              <span style="flex:1; font-size:15px; color:#6B6B6B">Musa B.</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding:0 16px; height:56px; border-bottom:1px solid #E2E2DE">
+              <span style="width:24px; height:24px; border-radius:4px; border:1px solid #C9C9C4; background:#FFFFFF"></span>
+              <span style="flex:1; font-size:15px; color:#6B6B6B">Fatima Y.</span>
+            </div>
+          </div>
+
+          <div style="padding:16px; display:flex; flex-direction:column; gap:12px">
+            <button type="button" style="height:44px; border:1px solid #E2E2DE; border-radius:4px; background:#FFFFFF; color:#1A1A1A; font-size:15px; cursor:pointer">Add someone not on the roster</button>
+          </div>
+          <div style="padding:16px; border-top:1px solid #E2E2DE; display:flex; flex-direction:column; gap:8px">
+            <button type="button" style="height:44px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Review report</button>
+            <p style="margin:0; text-align:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">SAVED ON THIS PHONE</p>
+          </div>
+        </div>
+
+        <div style="width:390px; background:#FFFFFF; border:1px solid #C9C9C4; border-radius:4px; display:flex; flex-direction:column">
+          <div style="height:24px; background:#F7F7F5; border-bottom:1px solid #E2E2DE; display:flex; align-items:center; justify-content:space-between; padding:0 16px; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B"><span>9:43</span><span>No signal</span></div>
+          <div style="padding:16px; border-bottom:1px solid #E2E2DE; display:flex; flex-direction:column; gap:4px">
+            <p style="margin:0; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Meeting 3 · Step 2 of 2</p>
+            <h3 style="margin:0; font-size:22px; line-height:30px; font-weight:600">Check and file</h3>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Tap any line to change it.</p>
+          </div>
+
+          <div style="display:flex; flex-direction:column">
+            <div style="display:flex; flex-direction:column; gap:4px; padding:12px 16px; border-bottom:1px solid #E2E2DE">
+              <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Attendance</span>
+              <span style="font-size:15px">24 present, 3 first timers</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; padding:12px 16px; border-bottom:1px solid #E2E2DE">
+              <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Practitioner block</span>
+              <span style="font-size:15px">Amaka O.</span>
+              <span style="font-size:13px; line-height:20px; color:#6B6B6B">Add what she covered</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; padding:12px 16px; border-bottom:1px solid #E2E2DE">
+              <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Demonstrators</span>
+              <span style="font-size:15px">Ibrahim S., Tolu A.</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; padding:12px 16px; border-bottom:1px solid #E2E2DE">
+              <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Blocked</span>
+              <span style="font-size:15px">Chidi E. — deploy failing on env vars</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; padding:12px 16px; border-bottom:1px solid #E2E2DE">
+              <span style="font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6B6B6B">Submissions noted</span>
+              <input type="text" placeholder="Anyone say they will submit?" style="height:44px; padding:0 12px; border:1px solid #E2E2DE; border-radius:4px; font-size:15px; width:100%; box-sizing:border-box">
+            </div>
+          </div>
+
+          <div style="padding:16px; display:flex; flex-direction:column; gap:12px; border-bottom:1px solid #E2E2DE">
+            <label style="font-size:13px; line-height:20px; font-weight:600">Did the Shift run?</label>
+            <div style="display:flex; border:1px solid #E2E2DE; border-radius:4px; overflow:hidden">
+              <button type="button" style="flex:1; height:44px; border:0; background:#FFFFFF; font-size:15px; cursor:pointer">Full</button>
+              <button type="button" aria-pressed="true" style="flex:1; height:44px; border:0; border-left:1px solid #E2E2DE; border-right:1px solid #E2E2DE; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">Shortened</button>
+              <button type="button" style="flex:1; height:44px; border:0; background:#FFFFFF; font-size:15px; cursor:pointer">Missed</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; padding:12px; background:#F7F7F5; border-radius:4px">
+              <label for="c-reason" style="font-size:13px; line-height:20px; font-weight:600">What shortened it?</label>
+              <p style="margin:0; font-size:13px; line-height:20px; color:#4A4A48">Nobody is marked down for this. Silence is worse than the reason.</p>
+              <textarea id="c-reason" rows="2" style="padding:10px 12px; border:1px solid #C9C9C4; border-radius:4px; background:#FFFFFF; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none">Hall needed at 6, ran the last two prompts</textarea>
+            </div>
+          </div>
+
+          <div style="padding:16px; display:flex; flex-direction:column; gap:8px">
+            <label for="c-flags" style="font-size:13px; line-height:20px; font-weight:600">Anything for your coordinator? <span style="font-weight:400; color:#6B6B6B">Optional</span></label>
+            <p style="margin:0; font-size:13px; line-height:20px; color:#6B6B6B">Blank is a normal answer.</p>
+            <textarea id="c-flags" rows="2" style="padding:10px 12px; border:1px solid #E2E2DE; border-radius:4px; font-size:15px; line-height:24px; width:100%; box-sizing:border-box; resize:none"></textarea>
+          </div>
+
+          <div style="padding:16px; border-top:1px solid #E2E2DE; display:flex; flex-direction:column; gap:8px">
+            <button type="button" style="height:44px; border:0; border-radius:4px; background:#2226B7; color:#FFFFFF; font-size:15px; font-weight:600; cursor:pointer">File report</button>
+            <p style="margin:0; text-align:center; font-family:'IBM Plex Mono', ui-monospace, monospace; font-size:12px; line-height:18px; color:#6B6B6B">QUEUED · SENDS WHEN YOU HAVE SIGNAL</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+</body>
+</html>
