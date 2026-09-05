@@ -29,7 +29,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 export default function StyleguidePage() {
   return (
-    <main className="mx-auto max-w-content px-4 py-16 md:px-6 lg:px-8">
+    <main>
       <header className="mb-16">
         <p className="meta-label mb-2 text-ink-muted">
           Design system reference
