@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { BteLogo } from "@/components/bte/logo";
 import { PlatformNav } from "@/app/(platform)/platform-nav";
 import { signOut } from "@/lib/actions/auth";
@@ -11,6 +12,9 @@ export default async function PlatformLayout({
   children: ReactNode;
 }) {
   const person = await getSessionPerson();
+  if (!person) {
+    redirect("/sign-in");
+  }
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
