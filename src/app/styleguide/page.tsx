@@ -1,5 +1,22 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { BteLogo } from "@/components/bte/logo";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import { Toggle } from "@/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export const metadata: Metadata = {
   title: "BTE Platform styleguide",
@@ -68,6 +85,18 @@ export default function StyleguidePage() {
           surface in this product, so it is not a token an agent can reach for
           here.
         </p>
+
+        <h2 className="mb-8 text-h2">Mark</h2>
+        <div className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="rounded border border-border bg-bg p-6">
+            <BteLogo variant="navy" />
+            <p className="meta-label mt-4 text-ink-muted">Navy on white</p>
+          </div>
+          <div className="rounded bg-navy p-6">
+            <BteLogo variant="white" />
+            <p className="meta-label mt-4 text-white">White on navy</p>
+          </div>
+        </div>
 
         <h2 className="mb-8 text-h2">
           Neutrals: provisional, pending brand sign-off
@@ -173,6 +202,60 @@ export default function StyleguidePage() {
             </div>
           </div>
         </div>
+
+        <h2 className="mt-12 mb-8 text-h2">
+          Interaction states: derived, 8% and 15% toward ink
+        </h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="rounded border border-border">
+            <div className="flex h-16 items-center rounded-t bg-navy-hover px-4">
+              <span className="text-sm font-semibold text-white">
+                White on navy-hover
+              </span>
+            </div>
+            <div className="p-3">
+              <p className="meta-label text-ink-muted">navy-hover</p>
+              <p className="text-sm">#2125AA · 11.00:1</p>
+            </div>
+          </div>
+          <div className="rounded border border-border">
+            <div className="flex h-16 items-center rounded-t bg-navy-active px-4">
+              <span className="text-sm font-semibold text-white">
+                White on navy-active
+              </span>
+            </div>
+            <div className="p-3">
+              <p className="meta-label text-ink-muted">navy-active</p>
+              <p className="text-sm">#21249F · 11.55:1</p>
+            </div>
+          </div>
+          <div className="rounded border border-border">
+            <div className="flex h-16 items-center rounded-t bg-danger-hover px-4">
+              <span className="text-sm font-semibold text-white">
+                White on danger-hover
+              </span>
+            </div>
+            <div className="p-3">
+              <p className="meta-label text-ink-muted">danger-hover</p>
+              <p className="text-sm">#982B2B · 7.73:1</p>
+            </div>
+          </div>
+          <div className="rounded border border-border">
+            <div className="flex h-16 items-center rounded-t bg-danger-active px-4">
+              <span className="text-sm font-semibold text-white">
+                White on danger-active
+              </span>
+            </div>
+            <div className="p-3">
+              <p className="meta-label text-ink-muted">danger-active</p>
+              <p className="text-sm">#8E2A2A · 8.35:1</p>
+            </div>
+          </div>
+        </div>
+        <p className="mt-6 max-w-prose text-sm text-ink-muted">
+          Do not use #1B1E92. That is navy mixed toward black, a different
+          method, and it is not in this theme.
+        </p>
       </section>
 
       {/* ---------------------------------------------------------------- */}
@@ -306,6 +389,14 @@ export default function StyleguidePage() {
           gap-[13px] and similar are not classes Tailwind can produce from this
           theme.
         </p>
+        <p className="mt-4 max-w-prose text-sm text-ink-muted">
+          Correction: the &quot;height minus line-height, halved&quot; padding
+          rule is withdrawn. 6px is not a step on this scale, so it could not be
+          built without an arbitrary value. Fixed-height controls now use the
+          fixed height plus horizontal padding only, no vertical padding &mdash;
+          see --control-height-* below and the Components section. Textareas
+          keep p-3, 12px all round, since they have no fixed height.
+        </p>
       </section>
 
       {/* ---------------------------------------------------------------- */}
@@ -342,6 +433,149 @@ export default function StyleguidePage() {
           No 8px, no 12px, no 16px. rounded-lg, rounded-xl and rounded-2xl are
           not classes Tailwind can produce from this theme.
         </p>
+      </section>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* Components: the nine restyled for D-001                          */}
+      {/* ---------------------------------------------------------------- */}
+      <section className="mb-24">
+        <SectionLabel>
+          Components: nine primitives restyled for D-001
+        </SectionLabel>
+        <p className="mt-2 max-w-prose text-sm text-ink-muted">
+          The other thirteen shadcn primitives in src/components/ui/ are still
+          stock. Lint blocks them from being used until a slice needs them.
+        </p>
+
+        <h2 className="mt-10 mb-4 text-h2">Button</h2>
+        <p className="mb-4 text-sm text-ink-muted">
+          Sizes 32 / 36 / 40, and 44 for touch. Hover and active use the derived
+          navy/danger tokens, not opacity.
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="destructive">Destructive</Button>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button size="sm">Small · 32</Button>
+          <Button size="default">Default · 36</Button>
+          <Button size="lg">Large · 40</Button>
+          <Button size="touch">Touch · 44</Button>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button disabled>Disabled</Button>
+          <Button loading>Loading</Button>
+        </div>
+
+        <h2 className="mt-10 mb-4 text-h2">Input &amp; Label</h2>
+        <div className="grid max-w-md gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="sg-name">Full name</Label>
+            <Input id="sg-name" placeholder="Ada Lovelace" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="sg-name-disabled">Disabled</Label>
+            <Input id="sg-name-disabled" disabled defaultValue="Locked value" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="sg-name-invalid">Email, invalid</Label>
+            <Input
+              id="sg-name-invalid"
+              aria-invalid
+              defaultValue="not-an-email"
+            />
+            <p className="text-sm text-danger">Enter a valid email address.</p>
+          </div>
+        </div>
+
+        <h2 className="mt-10 mb-4 text-h2">Textarea</h2>
+        <div className="grid max-w-md gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="sg-notes">Notes</Label>
+            <Textarea id="sg-notes" placeholder="12px padding, all round" />
+          </div>
+        </div>
+
+        <h2 className="mt-10 mb-4 text-h2">Badge</h2>
+        <div className="flex flex-wrap items-center gap-3">
+          <Badge>Neutral</Badge>
+          <Badge variant="ember">Ember</Badge>
+          <Badge variant="ember" className="text-white">
+            Ember, text-white attempted
+          </Badge>
+        </div>
+        <p className="mt-3 max-w-prose text-sm text-ink-muted">
+          The third badge passes className=&quot;text-white&quot; on purpose.
+          Ink still renders &mdash; the component re-applies ink after
+          className, so white on ember cannot reach the page.
+        </p>
+
+        <h2 className="mt-10 mb-4 text-h2">Toggle &amp; ToggleGroup</h2>
+        <div className="flex flex-wrap items-center gap-6">
+          <div className="flex items-center gap-2">
+            <Toggle aria-label="Bold">B</Toggle>
+            <Toggle aria-label="Italic" defaultPressed>
+              I
+            </Toggle>
+            <Toggle aria-label="Underline" disabled>
+              U
+            </Toggle>
+          </div>
+          <ToggleGroup type="single" defaultValue="week">
+            <ToggleGroupItem value="day">Day</ToggleGroupItem>
+            <ToggleGroupItem value="week">Week</ToggleGroupItem>
+            <ToggleGroupItem value="month">Month</ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+
+        <h2 className="mt-10 mb-4 text-h2">Table</h2>
+        <div className="rounded border border-border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Chapter</TableHead>
+                <TableHead>Institution</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>UNILAG</TableCell>
+                <TableCell>University of Lagos</TableCell>
+                <TableCell>
+                  <Badge>Active</Badge>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>OAU</TableCell>
+                <TableCell>Obafemi Awolowo University</TableCell>
+                <TableCell>
+                  <Badge>Active</Badge>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>UI</TableCell>
+                <TableCell>University of Ibadan</TableCell>
+                <TableCell>
+                  <Badge variant="ember">Pending</Badge>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <p className="mt-3 max-w-prose text-sm text-ink-muted">
+          Navy header, white mono-uppercase labels, 44px rows, zebra striping in
+          surface, no vertical rules.
+        </p>
+
+        <h2 className="mt-10 mb-4 text-h2">Skeleton</h2>
+        <div className="flex max-w-md flex-col gap-2">
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-1/2" />
+        </div>
       </section>
     </main>
   );

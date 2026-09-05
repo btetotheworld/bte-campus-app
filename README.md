@@ -1,14 +1,30 @@
 # BTE Platform
 
-The Believers Tech Expo platform. A Next.js application that runs BTE's internal operations. BTE Campus - chapter recruitment, approval, meetings, membership, submissions and health monitoring - is a module inside this platform, not a separate application.
-
-## Status
-
-Nothing has been scaffolded yet. This repository currently holds the specification and governance files only: no `package.json`, no Next.js app, no database. Setup runs in the phases documented in `docs/process/SETUP_PROMPTS.md`.
+The Believers Tech Expo platform. A Next.js application that runs BTE's internal operations. BTE Campus, chapter recruitment, approval, meetings, membership, submissions and health monitoring, is a module inside this platform, not a separate application.
 
 ## How to run it
 
-There is nothing to run yet. Once Phase 2 of `docs/process/SETUP_PROMPTS.md` has scaffolded the Next.js app, this section should be replaced with real install and dev-server instructions (`pnpm install`, `pnpm dev`, and so on).
+```bash
+pnpm install
+cp .env.example .env.local
+pnpm setup
+pnpm dev
+```
+
+`pnpm setup` is not a postinstall hook. It starts local Docker, applies migrations, and loads the synthetic seed. Never dump remote rows onto a laptop. Some students are minors.
+
+The app is at [http://localhost:3000](http://localhost:3000). Home is the platform shell. Sign in is at `/sign-in`. The styleguide is at `/styleguide`.
+
+```bash
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm db:test
+```
+
+`pnpm db:reset`, `pnpm db:seed`, and `pnpm db:test` are guarded. They refuse to run if this repo is linked to a remote Supabase project, if a database URL is not localhost, or if `NODE_ENV` is production. `pnpm db:push` prints a warning and exits. Pushing to remote is a deliberate human act.
+
+After `pnpm setup`, put the local anon key from `pnpm exec supabase --workdir db status` into `.env.local`. Do not commit `.env` or `.env.local`.
 
 ## Where the rules live
 
@@ -24,8 +40,8 @@ These files are specifications, not working notes. Do not rewrite, regenerate, r
 - `docs/ARCHITECTURE.md` - folder structure and slice ownership.
 - `docs/SLICE_BRIEFS.md` - per-engineer briefs, issuable only once `docs/SLICE_PATTERN.md` exists.
 - `docs/process/SETUP_PROMPTS.md` - the phased setup prompts used to build this repo out.
-- `src/app/globals.css` - the encoded design tokens, once it exists in this repo.
-- `db/migrations/0001_init.sql` and `db/tests/0001_invariants.test.sql` - the schema and its invariant tests, once they exist in this repo.
+- `src/app/globals.css` - the encoded design tokens.
+- `db/migrations/0001_init.sql` and `db/tests/0001_invariants.test.sql` - the schema and its invariant tests.
 
 ## Source documents
 

@@ -1,0 +1,15 @@
+# Foundation paths. Changes here are reviewed regardless of size.
+# Replace @REPLACE-FOUNDATION-OWNER with the GitHub handle of the foundation owner.
+
+/db/ @REPLACE-FOUNDATION-OWNER
+/lib/schemas/ @REPLACE-FOUNDATION-OWNER
+/lib/auth/ @REPLACE-FOUNDATION-OWNER
+/lib/actions/ @REPLACE-FOUNDATION-OWNER
+/src/lib/schemas/ @REPLACE-FOUNDATION-OWNER
+/src/lib/auth/ @REPLACE-FOUNDATION-OWNER
+/src/lib/actions/ @REPLACE-FOUNDATION-OWNER
+/src/components/ui/ @REPLACE-FOUNDATION-OWNER
+/docs/ @REPLACE-FOUNDATION-OWNER
+/src/app/globals.css @REPLACE-FOUNDATION-OWNER
+/eslint.config.mjs @REPLACE-FOUNDATION-OWNER
+/.github/ @REPLACE-FOUNDATION-OWNER

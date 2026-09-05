@@ -33,8 +33,11 @@ jobs:
       - name: Lint (fail on warnings)
         run: pnpm run lint
 
-      - name: Test
-        run: pnpm run test
+      - name: Schema and action files must have tests
+        run: pnpm run check:schema-action-tests
+
+      - name: Test (coverage printed, not gated)
+        run: pnpm run test:coverage
 
   db-migration-check:
     name: db/ changes require a new migration

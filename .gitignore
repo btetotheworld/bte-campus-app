@@ -48,3 +48,9 @@ next-env.d.ts
 
 # BTE governance Word files. Background only. See docs/campus-documents/.
 *.docx
+
+# Supabase CLI link state. A linked machine makes db reset target remote.
+**/.temp/
+
+# Never commit a remote data dump. Local seed is synthetic: db/seed.sql.
+supabase/seed.sql

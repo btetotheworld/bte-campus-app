@@ -64,6 +64,8 @@ components/bte/     BTE compositions built from ui/.
 db/migrations/      one owner.
 ```
 
+**A newly added shadcn primitive is restyled to `docs/DESIGN_SYSTEM.md` before first use.** Stock CLI output does not merge: it references Tailwind defaults this theme deliberately deleted (`rounded-md`, fractional spacing, arbitrary `ring-[...]` values, the shadcn `bg-primary`/`bg-muted`/`border-input`-style bridge classes that were never wired into `@theme`), and it fails lint by design. A primitive in `components/ui/` that still lints red has not been restyled yet, not been forgotten — that is the gate working, not a bug. Every future `shadcn add` reintroduces this; treat the restyle as a required step of adding the primitive, not a follow-up task.
+
 **Server first.** Default to Server Components. Reach for `"use client"` only when you need state, effects or browser APIs, and push it as far down the tree as possible.
 
 **Mutations are server actions.** Every one validates its input with the Zod schema from `lib/schemas/`. No unvalidated writes.
@@ -77,6 +79,7 @@ db/migrations/      one owner.
 ## 5. Writing code here
 
 - TypeScript strict. No `any`. No `@ts-ignore` without a comment explaining why.
+- Class names are always complete literal strings, never constructed from variables. A dynamic class produces no CSS and no error.
 - Name things the way the BTE documents name them. A chapter is a chapter, a lead is a lead, an assistant lead is an assistant lead, a build log is a build log. Do not invent synonyms.
 - Errors are handled and surfaced to the user. No silent `catch {}`.
 - Loading and empty states are part of the feature, not a later pass. A list with no empty state is not finished.
