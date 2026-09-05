@@ -71,6 +71,10 @@ applyIfMissing(
   "select column_name from information_schema.columns where table_name = 'people' and column_name = 'kind'",
   "db/migrations/0004_person_kind.sql"
 );
+applyIfMissing(
+  "select to_regclass('public.join_applications')",
+  "db/migrations/0005_join_applications.sql"
+);
 
 const seed = "db/seed.sql";
 if (!existsSync(seed)) {
