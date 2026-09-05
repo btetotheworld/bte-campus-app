@@ -2,19 +2,49 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "@/lib/actions/auth";
 import { FormField } from "@/components/bte/form-field";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function SignInForm() {
-  const [error, setError] = useState<string | null>(null);
+const REASON_COPY: Record<string, string> = {
+  inactive: "This account is inactive. Ask a coordinator if that is a mistake.",
+  unlinked: "This login is not linked to a person record.",
+  callback: "The reset link was not valid. Request a new one.",
+  "sign-out-failed": "Sign out did not finish. Try again.",
+};
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+export function SignInForm({
+  nextPath,
+  reason,
+}: {
+  nextPath: string;
+  reason?: string;
+}) {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(
+    reason ? (REASON_COPY[reason] ?? null) : null
+  );
+  const [pending, setPending] = useState(false);
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(
-      "Sign in is not connected yet. Add @supabase/ssr and @supabase/supabase-js, then wire the session in src/lib/auth/. Until then the shell is open so other slices can be built."
-    );
+    setError(null);
+    setPending(true);
+    const form = new FormData(event.currentTarget);
+    const result = await signIn({
+      email: String(form.get("email") ?? ""),
+      password: String(form.get("password") ?? ""),
+    });
+    setPending(false);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    router.push(nextPath.startsWith("/") ? nextPath : "/");
+    router.refresh();
   }
 
   return (
@@ -47,7 +77,9 @@ export function SignInForm() {
       </FormField>
 
       <div className="flex flex-col items-start gap-3">
-        <Button type="submit">Sign in</Button>
+        <Button type="submit" loading={pending}>
+          Sign in
+        </Button>
         <Link href="/forgot-password" className="text-sm text-navy underline">
           Reset your password
         </Link>

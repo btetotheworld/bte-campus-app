@@ -42,20 +42,31 @@ if (!url) {
   process.exit(1);
 }
 
-const people = capture(
-  `psql "${url}" -tAc "select to_regclass('public.people')"`
-);
-if (!people) {
-  const init = "db/migrations/0001_init.sql";
-  if (!existsSync(init)) {
-    console.error(`${init} is missing.`);
+function applyIfMissing(checkSql, file) {
+  const present = capture(`psql "${url}" -tAc "${checkSql}"`);
+  if (present && present !== "null" && present !== "f") return;
+  if (!existsSync(file)) {
+    console.error(`${file} is missing.`);
     process.exit(1);
   }
   console.log(
-    `Applying ${init} (the CLI skipped the untimestamped migration).`
+    `Applying ${file} (the CLI skipped the untimestamped migration).`
   );
-  run(`psql "${url}" -v ON_ERROR_STOP=1 -f ${init}`);
+  run(`psql "${url}" -v ON_ERROR_STOP=1 -f ${file}`);
 }
+
+applyIfMissing(
+  "select to_regclass('public.people')",
+  "db/migrations/0001_init.sql"
+);
+applyIfMissing(
+  "select to_regclass('public.platform_roles')",
+  "db/migrations/0002_rbac.sql"
+);
+applyIfMissing(
+  "select relrowsecurity from pg_class where oid = 'public.meetings'::regclass",
+  "db/migrations/0003_rls.sql"
+);
 
 const seed = "db/seed.sql";
 if (!existsSync(seed)) {
@@ -65,3 +76,8 @@ if (!existsSync(seed)) {
 
 console.log("Loading synthetic seed. Not remote rows.");
 run(`psql "${url}" -v ON_ERROR_STOP=1 -f ${seed}`);
+
+if (existsSync("scripts/seed-local-auth.mjs")) {
+  console.log("Creating local auth users. Password is local-dev-password.");
+  run("node scripts/seed-local-auth.mjs");
+}

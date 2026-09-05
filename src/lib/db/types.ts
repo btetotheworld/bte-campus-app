@@ -1,5 +1,5 @@
 // AUTO-GENERATED. Do not hand-edit.
-// Generated 2026-09-04T21:08:56.293Z by scripts/generate-db-types.mjs
+// Generated 2026-09-05T02:04:14.621Z by scripts/generate-db-types.mjs
 // Regenerate with: pnpm run db:types
 
 export type Json =
@@ -45,6 +45,13 @@ export type membership_role =
   | "practitioner"
   | "member";
 export type person_status = "pending" | "verified" | "hidden" | "inactive";
+export type platform_role =
+  | "founder"
+  | "people_manager"
+  | "program_coordinator"
+  | "showcase_owner"
+  | "reviewer"
+  | "auditor";
 export type reliability_result = "pass" | "concern" | "fail";
 export type shift_delivery = "full" | "shortened" | "missed";
 export type submission_status =
@@ -155,6 +162,36 @@ export type Database = {
           submitted_at?: string | null;
           conditional_deadline?: string | null;
           created_at?: string;
+        };
+        Relationships: [];
+      };
+      audit_log: {
+        Row: {
+          id: string;
+          occurred_at: string;
+          actor_id: string | null;
+          action: string;
+          entity: string;
+          entity_id: string | null;
+          metadata: Json;
+        };
+        Insert: {
+          id?: string;
+          occurred_at?: string;
+          actor_id?: string | null;
+          action: string;
+          entity: string;
+          entity_id?: string | null;
+          metadata?: Json;
+        };
+        Update: {
+          id?: string;
+          occurred_at?: string;
+          actor_id?: string | null;
+          action?: string;
+          entity?: string;
+          entity_id?: string | null;
+          metadata?: Json;
         };
         Relationships: [];
       };
@@ -947,6 +984,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      platform_roles: {
+        Row: {
+          id: string;
+          person_id: string;
+          role: platform_role;
+          granted_by: string;
+          granted_at: string;
+        };
+        Insert: {
+          id?: string;
+          person_id: string;
+          role: platform_role;
+          granted_by: string;
+          granted_at?: string;
+        };
+        Update: {
+          id?: string;
+          person_id?: string;
+          role?: platform_role;
+          granted_by?: string;
+          granted_at?: string;
+        };
+        Relationships: [];
+      };
       reviews: {
         Row: {
           id: string;
@@ -974,6 +1035,27 @@ export type Database = {
           body?: string | null;
           outcome?: string | null;
           returned_at?: string | null;
+        };
+        Relationships: [];
+      };
+      role_permissions: {
+        Row: {
+          role: string;
+          module: string;
+          operation: string;
+          scope: string;
+        };
+        Insert: {
+          role: string;
+          module: string;
+          operation: string;
+          scope: string;
+        };
+        Update: {
+          role?: string;
+          module?: string;
+          operation?: string;
+          scope?: string;
         };
         Relationships: [];
       };
@@ -1156,6 +1238,13 @@ export type Database = {
         | "practitioner"
         | "member";
       person_status: "pending" | "verified" | "hidden" | "inactive";
+      platform_role:
+        | "founder"
+        | "people_manager"
+        | "program_coordinator"
+        | "showcase_owner"
+        | "reviewer"
+        | "auditor";
       reliability_result: "pass" | "concern" | "fail";
       shift_delivery: "full" | "shortened" | "missed";
       submission_status:
