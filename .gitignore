@@ -31,7 +31,6 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
-.env*
 !.env.example
 
 # vercel
@@ -54,3 +53,4 @@ next-env.d.ts
 
 # Never commit a remote data dump. Local seed is synthetic: db/seed.sql.
 supabase/seed.sql
+config.bat
