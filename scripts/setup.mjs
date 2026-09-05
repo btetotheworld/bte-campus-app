@@ -18,6 +18,7 @@ import { existsSync, copyFileSync } from "node:fs";
 import { execSync, spawnSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { formatLocalLogins } from "./local-test-users.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 process.chdir(root);
@@ -152,6 +153,15 @@ if (run(supabase("start")).status !== 0) {
 }
 ok("Running");
 
+head("Local keys");
+if (run("node scripts/write-local-env.mjs").status !== 0) {
+  fail(
+    "Could not write local Supabase keys to .env.local.",
+    "Run `pnpm exec supabase --workdir db status` and copy the URL and anon key yourself."
+  );
+}
+ok("Wrote local URL and keys into .env.local");
+
 // ---------------------------------------------------------------- 6
 head("Database: migrations and synthetic seed");
 console.log(
@@ -167,6 +177,15 @@ if (run("pnpm run db:reset").status !== 0) {
   );
 }
 ok("Migrations applied, synthetic seed loaded");
+
+head("Local test logins");
+if (run("node scripts/seed-local-auth.mjs").status !== 0) {
+  fail(
+    "Could not create local auth users.",
+    "The local stack must be running. Then run `pnpm db:seed-auth`."
+  );
+}
+ok("Seed people can sign in. Credentials are printed above and in the README.");
 
 // ---------------------------------------------------------------- 7
 head("Generated types");
@@ -190,6 +209,12 @@ if (/ERROR/.test(inv)) {
   warn(
     "Invariant tests produced no rejections. That is suspicious. Check db/tests/."
   );
+}
+
+if (existsSync("db/tests/0002_rbac.test.sql")) {
+  const rbac = run("pnpm run db:test:rbac", { quiet: true });
+  if (rbac.status === 0) ok("RBAC guard tests passed");
+  else warn("RBAC guard tests failed. Do not push until they pass.");
 }
 
 if (existsSync("db/tests/0003_rls.test.sql")) {
@@ -232,6 +257,9 @@ ${G}${B}Ready.${O}
   ${B}${studioUrl}${O}   local Supabase Studio
   ${B}pnpm db:reset${O}    wipe and reseed local
   ${B}/styleguide${O}      design tokens and components
+
+${B}Local sign-in${O}
+${formatLocalLogins()}
 
 ${D}Read AGENTS.md before touching the database.
 Never run supabase link on a machine you develop on. Link, push, unlink.${O}

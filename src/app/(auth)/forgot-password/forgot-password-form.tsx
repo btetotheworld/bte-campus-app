@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { requestPasswordReset } from "@/lib/actions/auth";
 import { FormField } from "@/components/bte/form-field";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -9,12 +10,24 @@ import { Input } from "@/components/ui/input";
 
 export function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+  const [pending, setPending] = useState(false);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(
-      "Password reset is not connected yet. It waits on the same auth client as sign in."
-    );
+    setError(null);
+    setSent(false);
+    setPending(true);
+    const form = new FormData(event.currentTarget);
+    const result = await requestPasswordReset({
+      email: String(form.get("email") ?? ""),
+    });
+    setPending(false);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    setSent(true);
   }
 
   return (
@@ -26,10 +39,19 @@ export function ForgotPasswordForm() {
         </Alert>
       ) : null}
 
+      {sent ? (
+        <Alert>
+          <AlertTitle>Check that inbox</AlertTitle>
+          <AlertDescription>
+            If that email is on a person record, a reset link is on its way.
+          </AlertDescription>
+        </Alert>
+      ) : null}
+
       <FormField
         id="email"
         label="Email"
-        hint="We will send a reset link to this address once auth is wired."
+        hint="We send a reset link only when this address is on a person record."
       >
         <Input
           id="email"
@@ -41,7 +63,9 @@ export function ForgotPasswordForm() {
       </FormField>
 
       <div className="flex flex-col items-start gap-3">
-        <Button type="submit">Send reset link</Button>
+        <Button type="submit" loading={pending}>
+          Send reset link
+        </Button>
         <Link href="/sign-in" className="text-sm text-navy underline">
           Back to sign in
         </Link>

@@ -17,6 +17,11 @@
 -- observer (Femi Bello) exists so the member/observer distinction in
 -- chapter_members is exercised too.
 --
+-- Local sign-in (after `pnpm db:reset` creates matching auth.users):
+--   email: the address on the person row
+--   password: local-dev-password
+-- That password is for the local Docker stack only. Never use it remotely.
+--
 -- Safe to run repeatedly against a freshly reset database: `pnpm run db:reset`
 -- reapplies migrations then this file. It is not written to be idempotent
 -- against a database that already has this seed in it.
@@ -197,6 +202,15 @@ insert into memberships (person_id, department_id, role) values
 -- Fatima Bello (applicant) intentionally holds no membership: an applicant is
 -- identified by having an application and nothing else, per DATA_MODEL.md 5.
 
+-- Platform roles live in platform_roles, not on people. The first founder
+-- grant is a bootstrap insert (postgres). Authenticated grants cannot
+-- self-grant. See db/migrations/0002_rbac.sql.
+insert into platform_roles (person_id, role, granted_by) values
+  ('11111111-1111-1111-1111-100000000001', 'founder',
+   '11111111-1111-1111-1111-100000000001'),
+  ('11111111-1111-1111-1111-100000000002', 'program_coordinator',
+   '11111111-1111-1111-1111-100000000001');
+
 -- ============================================================
 -- Chapter attendance roll. Femi Bello is seeded as an observer on purpose,
 -- to exercise the member/observer split the submissions trigger checks.
@@ -266,5 +280,40 @@ insert into submissions (id, chapter_id, person_id, title, description, status) 
 -- now() + 21 days, the way it would for a real review.
 insert into reviews (submission_id, reviewer_id) values
   ('aaaaaaaa-1111-1111-1111-a00000000001', '11111111-1111-1111-1111-100000000002');
+
+-- Scores and a safety escalation exist so 0003 can prove they are hidden
+-- from the applicant and from a campus lead.
+insert into application_scores (
+  application_id, reviewer_id,
+  score_groundwork, score_track_record, score_written, score_video,
+  score_pair, score_availability, score_technical, decision
+) values (
+  '66666666-6666-6666-6666-600000000003',
+  '11111111-1111-1111-1111-100000000002',
+  2, 2, 1, 2, 1, 2, 1, 'hold'
+);
+
+insert into interviews (
+  application_id, interviewer_id, held_at,
+  score_groundwork_holds, score_assistant_real, score_holds_room,
+  score_escalates, score_works_in_system, score_honest,
+  recommendation, scored_at
+) values (
+  '66666666-6666-6666-6666-600000000003',
+  '11111111-1111-1111-1111-100000000002',
+  '2025-09-20 10:00:00+01',
+  2, 1, 2, 2, 1, 2,
+  'Not yet', '2025-09-20 11:00:00+01'
+);
+
+insert into escalations (chapter_id, raised_by, category, body) values
+  ('77777777-7777-7777-7777-700000000001',
+   '11111111-1111-1111-1111-100000000003',
+   'safety',
+   'Synthetic safety record. Used only to prove RLS hides this from leads.');
+
+-- RLS helpers look up people.auth_user_id = auth.uid(). Local auth users
+-- are created with the same ids by scripts/seed-local-auth.mjs.
+update people set auth_user_id = id;
 
 commit;
