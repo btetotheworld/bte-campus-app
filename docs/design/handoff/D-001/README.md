@@ -1,6 +1,6 @@
 # D-001 Component vocabulary
 
-Handoff before Pass 2. Status: `draft`. Approval is the founder's.
+Handoff. Status: `approved`. Approval is the founder's.
 
 This file is the resolved bundle. Token Check's `#1B1E92` is discarded. Use this directory and `docs/DESIGN_SYSTEM.md`, not a second colour sheet.
 
