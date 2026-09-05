@@ -26,6 +26,10 @@ pnpm db:test
 
 After `pnpm setup`, put the local anon key from `pnpm exec supabase --workdir db status` into `.env.local`. Do not commit `.env` or `.env.local`.
 
+## How to contribute
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md). Branch from `dev`. Open every pull request against `dev`, never against `main`. Link the issue, attach screenshots for UI changes, and include the preview URL.
+
 ## Where the rules live
 
 `AGENTS.md`, at the repo root, is the single source of truth for how any AI coding agent works in this repository. `CLAUDE.md`, `GEMINI.md`, `.clinerules`, `.windsurfrules` and `.cursor/rules/bte.mdc` are thin pointers to it. They carry no rules of their own, and none of them should ever grow any.
