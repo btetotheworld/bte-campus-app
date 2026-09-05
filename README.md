@@ -11,9 +11,31 @@ pnpm setup
 pnpm dev
 ```
 
-`pnpm setup` is not a postinstall hook. It starts local Docker, applies migrations, and loads the synthetic seed. Never dump remote rows onto a laptop. Some students are minors.
+`pnpm setup` is not a postinstall hook. It starts local Docker, applies migrations, loads the synthetic seed, and creates local auth users if they are missing. Never dump remote rows onto a laptop. Some students are minors.
 
 The app is at [http://localhost:3000](http://localhost:3000). Home is the platform shell. Sign in is at `/sign-in`. The styleguide is at `/styleguide`.
+
+## Local sign-in
+
+`pnpm setup` creates these synthetic logins if they do not already exist. `pnpm db:reset` does the same after a wipe. `pnpm db:seed-auth` creates any that are missing without resetting the database.
+
+Every seed person uses the same password: `local-dev-password`. That password is for the local Docker stack only.
+
+| Person        | Role                  | Email                          |
+| ------------- | --------------------- | ------------------------------ |
+| Ada Okafor    | founder               | ada.founder@example.org        |
+| Emeka Chukwu  | program coordinator   | emeka.coordinator@example.org  |
+| Tobi Adeyemi  | UNILAG campus lead    | tobi.lead@example.org          |
+| Ngozi Umeh    | UNILAG assistant lead | ngozi.assistant@example.org    |
+| Chidi Eze     | UNILAG practitioner   | chidi.practitioner@example.org |
+| Bisi Lawal    | UNILAG member         | bisi.member@example.org        |
+| Femi Bello    | UNILAG observer       | femi.observer@example.org      |
+| Kunle Afolabi | OAU campus lead       | kunle.lead2@example.org        |
+| Grace Nwosu   | OAU assistant lead    | grace.assistant2@example.org   |
+| Ibrahim Sule  | OAU member            | ibrahim.member2@example.org    |
+| Fatima Bello  | applicant             | fatima.applicant@example.org   |
+
+Start with Ada if you need the whole platform. Use Tobi and Fatima to check chapter-scoped and applicant access.
 
 ```bash
 pnpm typecheck
@@ -24,7 +46,7 @@ pnpm db:test
 
 `pnpm db:reset`, `pnpm db:seed`, and `pnpm db:test` are guarded. They refuse to run if this repo is linked to a remote Supabase project, if a database URL is not localhost, or if `NODE_ENV` is production. `pnpm db:push` prints a warning and exits. Pushing to remote is a deliberate human act.
 
-After `pnpm setup`, put the local anon key from `pnpm exec supabase --workdir db status` into `.env.local`. Do not commit `.env` or `.env.local`.
+`pnpm setup` writes the local URL and keys into `.env.local`. Do not commit `.env` or `.env.local`.
 
 ## How to contribute
 

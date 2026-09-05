@@ -17,10 +17,14 @@
     "db:reset": "node scripts/db-reset.mjs",
     "predb:seed": "node scripts/guard-local.mjs",
     "db:seed": "node scripts/db-reset.mjs",
+    "predb:seed-auth": "node scripts/guard-local.mjs",
+    "db:seed-auth": "node scripts/seed-local-auth.mjs",
     "predb:test": "node scripts/guard-local.mjs",
     "db:test": "psql \"$(node scripts/local-db-url.mjs)\" -f db/tests/0001_invariants.test.sql",
+    "predb:test:rbac": "node scripts/guard-local.mjs",
+    "db:test:rbac": "psql \"$(node scripts/local-db-url.mjs)\" -v ON_ERROR_STOP=1 -f db/tests/0002_rbac.test.sql",
     "predb:test:rls": "node scripts/guard-local.mjs",
-    "db:test:rls": "psql \"$(node scripts/local-db-url.mjs)\" -f db/tests/0003_rls.test.sql",
+    "db:test:rls": "psql \"$(node scripts/local-db-url.mjs)\" -v ON_ERROR_STOP=1 -f db/tests/0003_rls.test.sql",
     "db:types": "node scripts/generate-db-types.mjs",
     "db:new": "pnpm exec supabase --workdir db migration new",
     "db:diff": "pnpm exec supabase --workdir db db diff --local",
@@ -28,6 +32,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.5",
+    "@supabase/supabase-js": "^2.115.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.40.0",
@@ -37,7 +43,8 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "sonner": "^2.0.8",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.2",
