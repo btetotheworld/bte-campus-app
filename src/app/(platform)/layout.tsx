@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { BteLogo } from "@/components/bte/logo";
 import { PlatformNav } from "@/app/(platform)/platform-nav";
 import { signOut } from "@/lib/actions/auth";
+import { PATHNAME_HEADER, signInHref } from "@/lib/auth/sign-in-path";
 import { getSessionPerson } from "@/lib/auth/session";
 
 export default async function PlatformLayout({
@@ -13,7 +15,8 @@ export default async function PlatformLayout({
 }) {
   const person = await getSessionPerson();
   if (!person) {
-    redirect("/sign-in");
+    const headerStore = await headers();
+    redirect(signInHref(headerStore.get(PATHNAME_HEADER) ?? "/"));
   }
 
   return (
