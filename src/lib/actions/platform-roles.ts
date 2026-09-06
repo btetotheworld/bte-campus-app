@@ -55,6 +55,21 @@ export async function revokePlatformRole(
       }
 
       const supabase = await createClient();
+      const { data: assignment, error: loadError } = await supabase
+        .from("platform_roles")
+        .select("person_id")
+        .eq("id", assignmentId)
+        .maybeSingle();
+      if (loadError || !assignment) {
+        return {
+          ok: false,
+          error: "That role assignment was not found. Refresh and try again.",
+        };
+      }
+      if (assignment.person_id === actor.id) {
+        return { ok: false, error: "You cannot revoke your own access." };
+      }
+
       const { error } = await supabase
         .from("platform_roles")
         .delete()

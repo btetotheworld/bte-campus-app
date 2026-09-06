@@ -1,9 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const insert = vi.fn();
-const eq = vi.fn();
-const del = vi.fn(() => ({ eq }));
-const from = vi.fn(() => ({ insert, delete: del }));
+const deleteEq = vi.fn();
+const del = vi.fn(() => ({ eq: deleteEq }));
+const maybeSingle = vi.fn();
+const selectEq = vi.fn(() => ({ maybeSingle }));
+const select = vi.fn(() => ({ eq: selectEq }));
+const from = vi.fn(() => ({ insert, select, delete: del }));
 const getSessionPerson = vi.fn();
 
 vi.mock("@/lib/supabase/server", () => ({
@@ -87,8 +90,11 @@ describe("grantPlatformRole", () => {
 
 describe("revokePlatformRole", () => {
   beforeEach(() => {
-    eq.mockReset();
+    deleteEq.mockReset();
     del.mockClear();
+    maybeSingle.mockReset();
+    selectEq.mockClear();
+    select.mockClear();
     from.mockClear();
     getSessionPerson.mockReset();
     getSessionPerson.mockResolvedValue({
@@ -105,8 +111,21 @@ describe("revokePlatformRole", () => {
     expect(del).not.toHaveBeenCalled();
   });
 
+  it("rejects revoking your own access before deleting", async () => {
+    maybeSingle.mockResolvedValue({ data: { person_id: ADA }, error: null });
+    const result = await revokePlatformRole({
+      assignmentId: "aaaaaaaa-0000-0000-0000-000000000001",
+    });
+    expect(result).toEqual({
+      ok: false,
+      error: "You cannot revoke your own access.",
+    });
+    expect(del).not.toHaveBeenCalled();
+  });
+
   it("maps the last founder rejection", async () => {
-    eq.mockResolvedValue({
+    maybeSingle.mockResolvedValue({ data: { person_id: EMEKA }, error: null });
+    deleteEq.mockResolvedValue({
       error: { message: "Removing the last founder is blocked" },
     });
     const result = await revokePlatformRole({

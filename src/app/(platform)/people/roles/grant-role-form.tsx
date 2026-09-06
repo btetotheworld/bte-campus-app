@@ -7,6 +7,7 @@ import { GRANTABLE_PLATFORM_ROLES } from "@/lib/schemas/platform-roles";
 import { FormField } from "@/components/bte/form-field";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { SearchableSelect } from "@/app/(platform)/people/roles/searchable-select";
 
 const ROLE_LABELS: Record<(typeof GRANTABLE_PLATFORM_ROLES)[number], string> = {
   people_manager: "People manager",
@@ -16,6 +17,11 @@ const ROLE_LABELS: Record<(typeof GRANTABLE_PLATFORM_ROLES)[number], string> = {
   auditor: "Auditor",
 };
 
+const ROLE_OPTIONS = GRANTABLE_PLATFORM_ROLES.map((role) => ({
+  value: role,
+  label: ROLE_LABELS[role],
+}));
+
 export function GrantRoleForm({
   people,
 }: {
@@ -24,27 +30,33 @@ export function GrantRoleForm({
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [formKey, setFormKey] = useState(0);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setPending(true);
-    const form = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const result = await grantPlatformRole({
-      personId: String(form.get("personId") ?? ""),
-      role: String(form.get("role") ?? ""),
+      personId: String(data.get("personId") ?? ""),
+      role: String(data.get("role") ?? ""),
     });
     setPending(false);
     if (!result.ok) {
       setError(result.error);
       return;
     }
-    event.currentTarget.reset();
+    setFormKey((key) => key + 1);
     router.refresh();
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex max-w-prose flex-col gap-6">
+    <form
+      key={formKey}
+      onSubmit={onSubmit}
+      className="flex max-w-prose flex-col gap-6"
+    >
       {error ? (
         <Alert variant="destructive">
           <AlertTitle>The role was not granted</AlertTitle>
@@ -55,39 +67,32 @@ export function GrantRoleForm({
       <FormField
         id="personId"
         label="Person"
-        hint="The person must already have an account."
+        hint="Type a name to search. The person must already have an account."
       >
-        <select
+        <SearchableSelect
           id="personId"
           name="personId"
-          required
-          className="h-(--control-height) w-full rounded border border-border bg-bg px-3 text-sm text-ink outline-none disabled:cursor-not-allowed disabled:opacity-50"
           disabled={pending}
-        >
-          <option value="">Choose a person</option>
-          {people.map((person) => (
-            <option key={person.id} value={person.id}>
-              {person.full_name}
-            </option>
-          ))}
-        </select>
+          emptyMessage="No person matches that name."
+          options={people.map((person) => ({
+            value: person.id,
+            label: person.full_name,
+          }))}
+        />
       </FormField>
 
-      <FormField id="role" label="Role">
-        <select
+      <FormField
+        id="role"
+        label="Role"
+        hint="Type to filter the grantable roles."
+      >
+        <SearchableSelect
           id="role"
           name="role"
-          required
-          className="h-(--control-height) w-full rounded border border-border bg-bg px-3 text-sm text-ink outline-none disabled:cursor-not-allowed disabled:opacity-50"
           disabled={pending}
-        >
-          <option value="">Choose a role</option>
-          {GRANTABLE_PLATFORM_ROLES.map((role) => (
-            <option key={role} value={role}>
-              {ROLE_LABELS[role]}
-            </option>
-          ))}
-        </select>
+          emptyMessage="No role matches that search."
+          options={ROLE_OPTIONS}
+        />
       </FormField>
 
       <Button type="submit" loading={pending}>

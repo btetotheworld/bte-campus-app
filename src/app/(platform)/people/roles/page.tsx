@@ -42,7 +42,7 @@ export default async function PlatformRolesPage() {
     isFounder = Boolean(founderRow);
   }
 
-  if (!isFounder) {
+  if (!actor || !isFounder) {
     return (
       <>
         <PageHeader
@@ -131,7 +131,15 @@ export default async function PlatformRolesPage() {
             {
               key: "revoke",
               header: "Revoke",
-              cell: (row) => <RevokeRoleButton assignmentId={row.id} />,
+              cell: (row) => (
+                <RevokeRoleButton
+                  assignmentId={row.id}
+                  personId={row.person_id}
+                  actorPersonId={actor.id}
+                  personName={names.get(row.person_id) ?? "this person"}
+                  roleLabel={ROLE_LABELS[row.role]}
+                />
+              ),
             },
           ]}
           rows={grants}
