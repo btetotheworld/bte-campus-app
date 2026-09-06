@@ -25,6 +25,8 @@
     "db:test:rbac": "psql \"$(node scripts/local-db-url.mjs)\" -v ON_ERROR_STOP=1 -f db/tests/0002_rbac.test.sql",
     "predb:test:rls": "node scripts/guard-local.mjs",
     "db:test:rls": "psql \"$(node scripts/local-db-url.mjs)\" -v ON_ERROR_STOP=1 -f db/tests/0003_rls.test.sql",
+    "predb:test:join-applications": "node scripts/guard-local.mjs",
+    "db:test:join-applications": "psql \"$(node scripts/local-db-url.mjs)\" -v ON_ERROR_STOP=1 -f db/tests/0005_join_applications.test.sql",
     "db:types": "node scripts/generate-db-types.mjs",
     "db:new": "pnpm exec supabase --workdir db migration new",
     "db:diff": "pnpm exec supabase --workdir db db diff --local",

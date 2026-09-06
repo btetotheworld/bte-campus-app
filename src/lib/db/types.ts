@@ -1,5 +1,5 @@
 // AUTO-GENERATED. Do not hand-edit.
-// Generated 2026-09-05T13:20:41.356Z by scripts/generate-db-types.mjs
+// Generated 2026-09-05T13:25:03.932Z by scripts/generate-db-types.mjs
 // Regenerate with: pnpm run db:types
 
 export type Json =
@@ -34,6 +34,8 @@ export type escalation_category =
   | "name_use"
   | "signature"
   | "chapter_slipping";
+export type join_application_status =
+  "draft" | "submitted" | "approved" | "rejected";
 export type meeting_format = "ninety" | "sixty";
 export type meeting_status = "scheduled" | "held" | "cancelled";
 export type member_status = "member" | "observer";
@@ -793,6 +795,33 @@ export type Database = {
         };
         Relationships: [];
       };
+      join_applications: {
+        Row: {
+          id: string;
+          person_id: string;
+          department_id: string | null;
+          status: join_application_status;
+          submitted_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          person_id: string;
+          department_id?: string | null;
+          status?: join_application_status;
+          submitted_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          person_id?: string;
+          department_id?: string | null;
+          status?: join_application_status;
+          submitted_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       meeting_reports: {
         Row: {
           id: string;
@@ -1231,6 +1260,7 @@ export type Database = {
         | "name_use"
         | "signature"
         | "chapter_slipping";
+      join_application_status: "draft" | "submitted" | "approved" | "rejected";
       meeting_format: "ninety" | "sixty";
       meeting_status: "scheduled" | "held" | "cancelled";
       member_status: "member" | "observer";
