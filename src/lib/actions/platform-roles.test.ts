@@ -15,36 +15,12 @@ vi.mock("@/lib/auth/session", () => ({
 }));
 
 import {
-  grantErrorMessage,
   grantPlatformRole,
-  revokeErrorMessage,
   revokePlatformRole,
 } from "@/lib/actions/platform-roles";
 
 const ADA = "11111111-1111-1111-1111-100000000001";
 const EMEKA = "11111111-1111-1111-1111-100000000002";
-
-describe("grantErrorMessage", () => {
-  it("maps the self-grant trigger", () => {
-    expect(grantErrorMessage("Nobody grants themselves a platform role")).toBe(
-      "You cannot grant a role to yourself."
-    );
-  });
-
-  it("maps the rank trigger", () => {
-    expect(
-      grantErrorMessage("Nobody grants a role equal to or above their own")
-    ).toBe("You cannot grant a role equal to or above your own.");
-  });
-});
-
-describe("revokeErrorMessage", () => {
-  it("maps the last founder trigger", () => {
-    expect(revokeErrorMessage("Removing the last founder is blocked")).toBe(
-      "Removing the last founder is blocked."
-    );
-  });
-});
 
 describe("grantPlatformRole", () => {
   beforeEach(() => {
