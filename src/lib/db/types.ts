@@ -1,5 +1,5 @@
 // AUTO-GENERATED. Do not hand-edit.
-// Generated 2026-09-05T02:04:14.621Z by scripts/generate-db-types.mjs
+// Generated 2026-09-05T13:20:41.356Z by scripts/generate-db-types.mjs
 // Regenerate with: pnpm run db:types
 
 export type Json =
@@ -44,6 +44,7 @@ export type membership_role =
   | "assistant_lead"
   | "practitioner"
   | "member";
+export type person_kind = "team" | "community";
 export type person_status = "pending" | "verified" | "hidden" | "inactive";
 export type platform_role =
   | "founder"
@@ -957,6 +958,7 @@ export type Database = {
           year_group: number | null;
           created_at: string;
           verified_at: string | null;
+          kind: person_kind;
         };
         Insert: {
           id?: string;
@@ -969,6 +971,7 @@ export type Database = {
           year_group?: number | null;
           created_at?: string;
           verified_at?: string | null;
+          kind?: person_kind;
         };
         Update: {
           id?: string;
@@ -981,6 +984,7 @@ export type Database = {
           year_group?: number | null;
           created_at?: string;
           verified_at?: string | null;
+          kind?: person_kind;
         };
         Relationships: [];
       };
@@ -1237,6 +1241,7 @@ export type Database = {
         | "assistant_lead"
         | "practitioner"
         | "member";
+      person_kind: "team" | "community";
       person_status: "pending" | "verified" | "hidden" | "inactive";
       platform_role:
         | "founder"

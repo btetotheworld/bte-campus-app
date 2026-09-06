@@ -67,6 +67,10 @@ applyIfMissing(
   "select relrowsecurity from pg_class where oid = 'public.meetings'::regclass",
   "db/migrations/0003_rls.sql"
 );
+applyIfMissing(
+  "select column_name from information_schema.columns where table_name = 'people' and column_name = 'kind'",
+  "db/migrations/0004_person_kind.sql"
+);
 
 const seed = "db/seed.sql";
 if (!existsSync(seed)) {

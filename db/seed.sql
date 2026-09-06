@@ -31,18 +31,19 @@ begin;
 -- ============================================================
 -- People
 -- ============================================================
-insert into people (id, full_name, email, status) values
-  ('11111111-1111-1111-1111-100000000001', 'Ada Okafor',     'ada.founder@example.org',       'verified'),
-  ('11111111-1111-1111-1111-100000000002', 'Emeka Chukwu',   'emeka.coordinator@example.org', 'verified'),
-  ('11111111-1111-1111-1111-100000000003', 'Tobi Adeyemi',   'tobi.lead@example.org',         'verified'),
-  ('11111111-1111-1111-1111-100000000004', 'Ngozi Umeh',     'ngozi.assistant@example.org',   'verified'),
-  ('11111111-1111-1111-1111-100000000005', 'Chidi Eze',      'chidi.practitioner@example.org','verified'),
-  ('11111111-1111-1111-1111-100000000006', 'Bisi Lawal',     'bisi.member@example.org',       'verified'),
-  ('11111111-1111-1111-1111-100000000007', 'Femi Bello',     'femi.observer@example.org',     'verified'),
-  ('11111111-1111-1111-1111-100000000008', 'Kunle Afolabi',  'kunle.lead2@example.org',       'verified'),
-  ('11111111-1111-1111-1111-100000000009', 'Grace Nwosu',    'grace.assistant2@example.org',  'verified'),
-  ('11111111-1111-1111-1111-100000000010', 'Ibrahim Sule',   'ibrahim.member2@example.org',   'verified'),
-  ('11111111-1111-1111-1111-100000000011', 'Fatima Bello',   'fatima.applicant@example.org',  'pending');
+-- kind: team = BTE volunteers, community = students and applicants (RBAC.md 3).
+insert into people (id, full_name, email, status, kind) values
+  ('11111111-1111-1111-1111-100000000001', 'Ada Okafor',     'ada.founder@example.org',       'verified',  'team'),
+  ('11111111-1111-1111-1111-100000000002', 'Emeka Chukwu',   'emeka.coordinator@example.org', 'verified',  'team'),
+  ('11111111-1111-1111-1111-100000000003', 'Tobi Adeyemi',   'tobi.lead@example.org',         'verified',  'team'),
+  ('11111111-1111-1111-1111-100000000004', 'Ngozi Umeh',     'ngozi.assistant@example.org',   'verified',  'team'),
+  ('11111111-1111-1111-1111-100000000005', 'Chidi Eze',      'chidi.practitioner@example.org','verified',  'community'),
+  ('11111111-1111-1111-1111-100000000006', 'Bisi Lawal',     'bisi.member@example.org',       'verified',  'community'),
+  ('11111111-1111-1111-1111-100000000007', 'Femi Bello',     'femi.observer@example.org',     'verified',  'community'),
+  ('11111111-1111-1111-1111-100000000008', 'Kunle Afolabi',  'kunle.lead2@example.org',       'verified',  'team'),
+  ('11111111-1111-1111-1111-100000000009', 'Grace Nwosu',    'grace.assistant2@example.org',  'verified',  'team'),
+  ('11111111-1111-1111-1111-100000000010', 'Ibrahim Sule',   'ibrahim.member2@example.org',   'verified',  'community'),
+  ('11111111-1111-1111-1111-100000000011', 'Fatima Bello',   'fatima.applicant@example.org',  'pending',   'community');
 
 -- ============================================================
 -- Campus module: institutions, fellowships, cohort
