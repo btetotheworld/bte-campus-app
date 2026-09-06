@@ -24,7 +24,7 @@ export default async function PlatformLayout({
         </Link>
         <PlatformNav />
         <div className="mt-auto flex flex-col items-start gap-2 text-sm text-ink-muted">
-          <p>{person ? person.full_name : "Signed in"}</p>
+          <p>{person.full_name}</p>
           <form action={signOut}>
             <button type="submit" className="text-navy underline">
               Sign out
