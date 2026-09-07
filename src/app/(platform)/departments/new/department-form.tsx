@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createDepartmentSchema } from "@/lib/schemas/departments";
-import { createDepartment } from "../actions";
+import { createDepartment } from "@/lib/actions/departments";
 
 export function DepartmentForm() {
   const router = useRouter();
