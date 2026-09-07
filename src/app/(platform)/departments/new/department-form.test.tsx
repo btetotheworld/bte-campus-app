@@ -12,7 +12,9 @@ const mocks = vi.hoisted(() => ({
   push: vi.fn(),
   refresh: vi.fn(),
 }));
-vi.mock("../actions", () => ({ createDepartment: mocks.create }));
+vi.mock("@/lib/actions/departments", () => ({
+  createDepartment: mocks.create,
+}));
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: mocks.push, refresh: mocks.refresh }),
 }));

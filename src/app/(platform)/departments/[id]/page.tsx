@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
-import { z } from "zod";
+import { ModuleGate } from "@/app/(platform)/module-gate";
+import { loadPlatformAccess } from "@/lib/auth/permissions";
+import { canAccess } from "@/lib/auth/nav-access";
 import { PageHeader } from "@/components/bte/page-header";
 import { DefinitionList } from "@/components/bte/definition-list";
 import { StatusBadge } from "@/components/bte/status-badge";
@@ -7,13 +9,29 @@ import { createClient } from "@/lib/supabase/server";
 
 export const metadata = { title: "Department" };
 
+const DEPARTMENT_ID =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export default async function DepartmentPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const access = await loadPlatformAccess();
+  if (!canAccess(access, "departments", "read")) {
+    return (
+      <ModuleGate
+        access={access}
+        module="departments"
+        operation="read"
+        title="Departments"
+      >
+        {null}
+      </ModuleGate>
+    );
+  }
   const { id } = await params;
-  if (!z.uuid().safeParse(id).success) notFound();
+  if (!DEPARTMENT_ID.test(id)) notFound();
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("departments")
