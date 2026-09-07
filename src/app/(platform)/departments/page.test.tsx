@@ -14,6 +14,7 @@ import DepartmentsPage from "./page";
 
 describe("DepartmentsPage", () => {
   afterEach(cleanup);
+
   it("renders working links to creation and the returned record", async () => {
     mocks.access.mockResolvedValue({ isFounder: true, permissions: [] });
     mocks.rows.mockResolvedValue({
@@ -28,6 +29,7 @@ describe("DepartmentsPage", () => {
       screen.getByRole("link", { name: "Example department" })
     ).toHaveAttribute("href", "/departments/example-id");
   });
+
   it("shows an empty state without a create action for read-only users", async () => {
     mocks.access.mockResolvedValue({
       isFounder: false,
@@ -43,6 +45,7 @@ describe("DepartmentsPage", () => {
     ).not.toBeInTheDocument();
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
   });
+
   it("surfaces a failed query instead of showing an empty list", async () => {
     mocks.access.mockResolvedValue({ isFounder: true, permissions: [] });
     mocks.rows.mockResolvedValue({ data: null, error: { message: "offline" } });
@@ -50,6 +53,7 @@ describe("DepartmentsPage", () => {
       "Departments could not be loaded"
     );
   });
+
   it("denies users without module read access before querying departments", async () => {
     mocks.rows.mockClear();
     mocks.access.mockResolvedValue({ isFounder: false, permissions: [] });
