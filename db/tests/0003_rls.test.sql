@@ -222,4 +222,50 @@ update people
 set status = 'verified'
 where id = '11111111-1111-1111-1111-100000000006';
 
+\echo '--- TEST 10: a member can update their own person row'
+select pg_temp.as_person('11111111-1111-1111-1111-100000000006');
+set role authenticated;
+
+update people
+set phone = '+234 800 000 0000'
+where id = '11111111-1111-1111-1111-100000000006';
+
+do $$
+declare
+  saved_phone text;
+begin
+  select phone into saved_phone
+  from people
+  where id = '11111111-1111-1111-1111-100000000006';
+  if saved_phone <> '+234 800 000 0000' then
+    raise exception 'Member could not update their own person row';
+  end if;
+end;
+$$;
+
+reset role;
+
+\echo '--- TEST 11: a member cannot update another person row'
+select pg_temp.as_person('11111111-1111-1111-1111-100000000006');
+set role authenticated;
+
+update people
+set phone = '+234 811 111 1111'
+where id = '11111111-1111-1111-1111-100000000003';
+
+do $$
+declare
+  saved_phone text;
+begin
+  select phone into saved_phone
+  from people
+  where id = '11111111-1111-1111-1111-100000000003';
+  if saved_phone = '+234 811 111 1111' then
+    raise exception 'Member updated another person row';
+  end if;
+end;
+$$;
+
+reset role;
+
 \echo '--- 0003 rls tests finished'

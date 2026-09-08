@@ -1,5 +1,5 @@
 // AUTO-GENERATED. Do not hand-edit.
-// Generated 2026-09-05T02:04:14.621Z by scripts/generate-db-types.mjs
+// Generated 2026-09-08T00:45:31.702Z by scripts/generate-db-types.mjs
 // Regenerate with: pnpm run db:types
 
 export type Json =

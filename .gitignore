@@ -54,3 +54,5 @@ next-env.d.ts
 
 # Never commit a remote data dump. Local seed is synthetic: db/seed.sql.
 supabase/seed.sql
+
+.early.coverage
