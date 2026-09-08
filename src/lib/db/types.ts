@@ -1,5 +1,5 @@
 // AUTO-GENERATED. Do not hand-edit.
-// Generated 2026-09-05T02:04:14.621Z by scripts/generate-db-types.mjs
+// Generated 2026-09-05T13:25:03.932Z by scripts/generate-db-types.mjs
 // Regenerate with: pnpm run db:types
 
 export type Json =
@@ -34,6 +34,8 @@ export type escalation_category =
   | "name_use"
   | "signature"
   | "chapter_slipping";
+export type join_application_status =
+  "draft" | "submitted" | "approved" | "rejected";
 export type meeting_format = "ninety" | "sixty";
 export type meeting_status = "scheduled" | "held" | "cancelled";
 export type member_status = "member" | "observer";
@@ -44,6 +46,7 @@ export type membership_role =
   | "assistant_lead"
   | "practitioner"
   | "member";
+export type person_kind = "team" | "community";
 export type person_status = "pending" | "verified" | "hidden" | "inactive";
 export type platform_role =
   | "founder"
@@ -792,6 +795,33 @@ export type Database = {
         };
         Relationships: [];
       };
+      join_applications: {
+        Row: {
+          id: string;
+          person_id: string;
+          department_id: string | null;
+          status: join_application_status;
+          submitted_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          person_id: string;
+          department_id?: string | null;
+          status?: join_application_status;
+          submitted_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          person_id?: string;
+          department_id?: string | null;
+          status?: join_application_status;
+          submitted_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       meeting_reports: {
         Row: {
           id: string;
@@ -957,6 +987,7 @@ export type Database = {
           year_group: number | null;
           created_at: string;
           verified_at: string | null;
+          kind: person_kind;
         };
         Insert: {
           id?: string;
@@ -969,6 +1000,7 @@ export type Database = {
           year_group?: number | null;
           created_at?: string;
           verified_at?: string | null;
+          kind?: person_kind;
         };
         Update: {
           id?: string;
@@ -981,6 +1013,7 @@ export type Database = {
           year_group?: number | null;
           created_at?: string;
           verified_at?: string | null;
+          kind?: person_kind;
         };
         Relationships: [];
       };
@@ -1227,6 +1260,7 @@ export type Database = {
         | "name_use"
         | "signature"
         | "chapter_slipping";
+      join_application_status: "draft" | "submitted" | "approved" | "rejected";
       meeting_format: "ninety" | "sixty";
       meeting_status: "scheduled" | "held" | "cancelled";
       member_status: "member" | "observer";
@@ -1237,6 +1271,7 @@ export type Database = {
         | "assistant_lead"
         | "practitioner"
         | "member";
+      person_kind: "team" | "community";
       person_status: "pending" | "verified" | "hidden" | "inactive";
       platform_role:
         | "founder"

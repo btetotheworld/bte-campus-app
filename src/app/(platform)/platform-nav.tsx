@@ -2,30 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/people", label: "People" },
-  { href: "/campus/chapters", label: "Chapters" },
-  { href: "/campus/applications", label: "Applications" },
-  { href: "/campus/meetings", label: "Meetings" },
-  { href: "/campus/members", label: "Members" },
-  { href: "/campus/submissions", label: "Submissions" },
-  { href: "/campus/health", label: "Health" },
-] as const;
+import type { NavItem } from "@/lib/auth/nav-access";
 
 function isCurrent(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function PlatformNav() {
+export function PlatformNav({ items }: { items: readonly NavItem[] }) {
   const pathname = usePathname();
 
   return (
     <nav aria-label="Platform">
       <ul className="flex flex-col gap-1">
-        {ITEMS.map((item) => {
+        {items.map((item) => {
           const current = isCurrent(pathname, item.href);
           return (
             <li key={item.href}>

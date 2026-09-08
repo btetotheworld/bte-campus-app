@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { SlicePlaceholder } from "@/app/(platform)/slice-placeholder";
+import { GatedPlaceholder } from "@/app/(platform)/module-gate";
 
 export const metadata: Metadata = { title: "Health" };
 
 export default function HealthPage() {
   return (
-    <SlicePlaceholder
+    <GatedPlaceholder
       title="Health"
+      module="succession"
+      operation="read"
       message="Chapter health has not been built yet. Assemble it from the dashboard archetype on the styleguide."
     />
   );

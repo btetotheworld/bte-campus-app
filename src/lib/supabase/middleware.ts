@@ -1,7 +1,16 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/lib/db/types";
+import { PATHNAME_HEADER } from "@/lib/auth/sign-in-path";
 import { supabaseAnonKey, supabaseUrl } from "@/lib/supabase/env";
+
+function nextWithPathname(request: NextRequest) {
+  const headers = new Headers(request.headers);
+  headers.set(PATHNAME_HEADER, request.nextUrl.pathname);
+  return NextResponse.next({
+    request: { headers },
+  });
+}
 
 const PUBLIC_PREFIXES = ["/sign-in", "/forgot-password", "/auth/callback"];
 
@@ -14,7 +23,7 @@ function isPublicPath(pathname: string): boolean {
 }
 
 export async function updateSession(request: NextRequest) {
-  let response = NextResponse.next({ request });
+  let response = nextWithPathname(request);
 
   const supabase = createServerClient<Database>(
     supabaseUrl(),
@@ -28,7 +37,7 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) => {
             request.cookies.set(name, value);
           });
-          response = NextResponse.next({ request });
+          response = nextWithPathname(request);
           cookiesToSet.forEach(({ name, value, options }) => {
             response.cookies.set(name, value, options);
           });

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 
 export type SessionPerson = {
@@ -7,22 +8,24 @@ export type SessionPerson = {
   status: string;
 };
 
-export async function getSessionPerson(): Promise<SessionPerson | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return null;
+export const getSessionPerson = cache(
+  async function getSessionPerson(): Promise<SessionPerson | null> {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return null;
 
-  const { data, error } = await supabase
-    .from("people")
-    .select("id, full_name, email, status")
-    .eq("auth_user_id", user.id)
-    .maybeSingle();
+    const { data, error } = await supabase
+      .from("people")
+      .select("id, full_name, email, status")
+      .eq("auth_user_id", user.id)
+      .maybeSingle();
 
-  if (error || !data || data.status === "inactive") {
-    return null;
+    if (error || !data || data.status === "inactive") {
+      return null;
+    }
+
+    return data;
   }
-
-  return data;
-}
+);
