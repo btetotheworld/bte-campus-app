@@ -199,13 +199,14 @@
           if (v !== void 0) d[k] = v;
         }
         return d;
-      }, [entry.propsMeta]);
+      }, []);
       return h(Root, { ...defaults, ...(entry.propOverrides || {}) });
     }
     const ReactDOM = getReactDOM();
-    if (ReactDOM.createRoot)
-      ReactDOM.createRoot(hostEl).render(h(StandaloneRoot));
-    else ReactDOM.render(h(StandaloneRoot), hostEl);
+    if (!ReactDOM.createRoot) {
+      throw new Error("React 18 createRoot is required.");
+    }
+    ReactDOM.createRoot(hostEl).render(h(StandaloneRoot));
     return rootName;
   }
 
@@ -913,13 +914,13 @@
       this.props = props || {};
     }
     setState(update, cb) {
-      this.__host && this.__host.__setLogicState(update, cb);
+      if (this.__host) this.__host.__setLogicState(update, cb);
     }
     forceUpdate() {
-      this.__host && this.__host.forceUpdate();
+      if (this.__host) this.__host.forceUpdate();
     }
     componentDidMount() {}
-    componentDidUpdate(_prevProps) {}
+    componentDidUpdate() {}
     componentWillUnmount() {}
     /** The flat object the template renders against (merged over props). */
     renderVals() {
@@ -1048,8 +1049,11 @@
       /** The props the author's logic + template see — internal __-prefixed
        *  wiring stripped. */
       __userProps() {
-        const { __name, __hintSize, __tplId, __hostStyle, ...rest } =
-          this.props;
+        const rest = { ...this.props };
+        delete rest.__name;
+        delete rest.__hintSize;
+        delete rest.__tplId;
+        delete rest.__hostStyle;
         return rest;
       }
       __setLogicState(update, cb) {
@@ -1334,13 +1338,13 @@
                   presets: ["react", "typescript"],
                 }).code
               : src;
-          const module = { exports: {} };
+          const loaded = { exports: {} };
           const before = new Set(Object.keys(window));
           //! nosemgrep: eval-and-function-constructor
           new Function("React", "module", "exports", "require", code)(
             getReact(),
-            module,
-            module.exports,
+            loaded,
+            loaded.exports,
             () => ({})
           );
           const globals = {};
@@ -1349,12 +1353,12 @@
               globals[k] = window[k];
             }
           }
-          cache.set(url, { mod: module.exports, globals });
+          cache.set(url, { mod: loaded.exports, globals });
           console.info(
             "[dc-runtime] x-import: loaded",
             url,
             "\u2014 exports:",
-            Object.keys(module.exports),
+            Object.keys(loaded.exports),
             "window globals:",
             Object.keys(globals)
           );
