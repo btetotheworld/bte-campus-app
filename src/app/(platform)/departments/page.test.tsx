@@ -53,7 +53,6 @@ describe("DepartmentsPage", () => {
       "Departments could not be loaded"
     );
   });
-
   it("denies users without module read access before querying departments", async () => {
     mocks.rows.mockClear();
     mocks.access.mockResolvedValue({ isFounder: false, permissions: [] });
