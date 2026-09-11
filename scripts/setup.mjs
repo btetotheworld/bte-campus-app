@@ -225,6 +225,12 @@ if (existsSync("db/tests/0003_rls.test.sql")) {
   warn("No RLS tests found. RLS is not yet in place.");
 }
 
+if (existsSync("db/tests/0005_join_applications.test.sql")) {
+  const join = run("pnpm run db:test:join-applications", { quiet: true });
+  if (join.status === 0) ok("Join application RLS tests passed");
+  else warn("Join application RLS tests failed. Do not push until they pass.");
+}
+
 // ---------------------------------------------------------------- 9
 head("Toolchain");
 for (const [label, cmd] of [
