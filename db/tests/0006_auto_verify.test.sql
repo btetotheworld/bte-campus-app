@@ -11,6 +11,10 @@ begin
 end;
 $$;
 
+delete from badges where person_id::text like 'aaaaaaaa-0000%';
+delete from audit_log where entity_id::text like 'aaaaaaaa-0000%';
+delete from people where id::text like 'aaaaaaaa-0000%';
+
 insert into people (id, full_name, email, status, kind, pending_since) values
   (
     'aaaaaaaa-0000-0000-0000-000000000091',

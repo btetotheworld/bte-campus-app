@@ -86,14 +86,16 @@ revoke all on function verify_person(uuid) from public;
 create or replace function auto_verify_people()
 returns jsonb
 language plpgsql
-security definer
+security invoker
 set search_path = public
 as $$
 declare
   v_person_id uuid;
   v_verified int := 0;
 begin
-  if current_user <> 'service_role' then
+  if current_user <> 'service_role'
+     and coalesce(current_setting('request.jwt.claim.role', true), '') <>
+       'service_role' then
     raise exception 'auto_verify_people requires the service role';
   end if;
 
