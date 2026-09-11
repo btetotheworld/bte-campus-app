@@ -75,6 +75,10 @@ applyIfMissing(
   "select to_regclass('public.join_applications')",
   "db/migrations/0005_join_applications.sql"
 );
+applyIfMissing(
+  "select to_regprocedure('public.auto_verify_people()')",
+  "db/migrations/0006_auto_verify.sql"
+);
 
 const seed = "db/seed.sql";
 if (!existsSync(seed)) {

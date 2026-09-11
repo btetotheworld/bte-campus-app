@@ -988,6 +988,7 @@ export type Database = {
           created_at: string;
           verified_at: string | null;
           kind: person_kind;
+          pending_since: string | null;
         };
         Insert: {
           id?: string;
@@ -1001,6 +1002,7 @@ export type Database = {
           created_at?: string;
           verified_at?: string | null;
           kind?: person_kind;
+          pending_since?: string | null;
         };
         Update: {
           id?: string;
@@ -1014,6 +1016,7 @@ export type Database = {
           created_at?: string;
           verified_at?: string | null;
           kind?: person_kind;
+          pending_since?: string | null;
         };
         Relationships: [];
       };
@@ -1235,7 +1238,16 @@ export type Database = {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      auto_verify_people: {
+        Args: Record<string, never>;
+        Returns: Json;
+      };
+      auto_verify_status: {
+        Args: Record<string, never>;
+        Returns: Json;
+      };
+    };
     Enums: {
       application_status:
         | "draft"
