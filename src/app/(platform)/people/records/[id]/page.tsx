@@ -7,6 +7,7 @@ import { DefinitionList } from "@/components/bte/definition-list";
 import { StatusBadge } from "@/components/bte/status-badge";
 import { buttonVariants } from "@/components/ui/button";
 import { loadPersonRecord, personStatusLabels } from "../record-data";
+import { VerifyPersonButton } from "./verify-person-button";
 
 export const metadata = { title: "Person record" };
 const date = (value: string) =>
@@ -35,6 +36,7 @@ export default async function PersonRecordPage({
     );
   }
   const person = await loadPersonRecord((await params).id);
+  const canUpdate = canAccess(access, "people", "update");
   return (
     <>
       <PageHeader
@@ -44,7 +46,12 @@ export default async function PersonRecordPage({
           { href: "/people/records", label: "Person records" },
         ]}
         action={
-          canAccess(access, "people", "update") && person.contact ? (
+          person.status === "pending" && canUpdate ? (
+            <VerifyPersonButton
+              personId={person.id}
+              personName={person.full_name}
+            />
+          ) : canUpdate && person.contact ? (
             <Link
               href={`/people/records/${person.id}/edit`}
               className={buttonVariants({

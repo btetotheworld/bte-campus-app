@@ -1,4 +1,11 @@
 import { z } from "zod";
+import { personRecordIdSchema } from "@/lib/schemas/edit-person-record";
+
+export const verifyPersonSchema = z.strictObject({
+  personId: personRecordIdSchema,
+});
+
+export type VerifyPersonInput = z.infer<typeof verifyPersonSchema>;
 
 export const updatePersonSchema = z
   .object({

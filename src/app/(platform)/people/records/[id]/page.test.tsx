@@ -6,6 +6,9 @@ vi.mock("../record-data", () => ({
   loadPersonRecord: mocks.record,
   personStatusLabels: { pending: "Pending" },
 }));
+vi.mock("./verify-person-button", () => ({
+  VerifyPersonButton: () => <button type="button">Verify person</button>,
+}));
 import PersonRecordPage from "./page";
 const params = Promise.resolve({ id: "person-id" });
 describe("PersonRecordPage", () => {
@@ -26,7 +29,7 @@ describe("PersonRecordPage", () => {
     });
   });
   afterEach(cleanup);
-  it("lets read-only users view non-contact facts without an edit action", async () => {
+  it("lets read-only users view non-contact facts without a verify or edit action", async () => {
     render(await PersonRecordPage({ params }));
     expect(
       screen.getByRole("heading", { name: "Example Person" })
@@ -36,6 +39,9 @@ describe("PersonRecordPage", () => {
         /You do not have access to this person's contact details/
       )
     ).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Verify person" })
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("link", { name: "Edit person record" })
     ).not.toBeInTheDocument();
@@ -47,16 +53,28 @@ describe("PersonRecordPage", () => {
     render(await PersonRecordPage({ params }));
     expect(mocks.record).not.toHaveBeenCalled();
   });
+  it("shows verify as the primary action for pending records", async () => {
+    mocks.access.mockResolvedValue({ isFounder: true, permissions: [] });
+    render(await PersonRecordPage({ params }));
+    expect(screen.getByRole("button", { name: "Verify person" })).toBeVisible();
+    expect(
+      screen.queryByRole("link", { name: "Edit person record" })
+    ).not.toBeInTheDocument();
+  });
   it("shows editing only to authorized editors with contact access", async () => {
     mocks.access.mockResolvedValue({ isFounder: true, permissions: [] });
     const record = await mocks.record();
     mocks.record.mockResolvedValue({
       ...record,
+      status: "verified",
       contact: { email: "example@example.org", phone: null },
     });
     render(await PersonRecordPage({ params }));
     expect(
       screen.getByRole("link", { name: "Edit person record" })
     ).toHaveAttribute("href", "/people/records/person-id/edit");
+    expect(
+      screen.queryByRole("button", { name: "Verify person" })
+    ).not.toBeInTheDocument();
   });
 });
