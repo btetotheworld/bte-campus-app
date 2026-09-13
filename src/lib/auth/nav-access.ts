@@ -22,6 +22,12 @@ export const PLATFORM_NAV: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/people", label: "People", module: "people", operation: "read" },
   {
+    href: "/departments",
+    label: "Departments",
+    module: "departments",
+    operation: "read",
+  },
+  {
     href: "/campus/chapters",
     label: "Chapters",
     module: "chapters",
