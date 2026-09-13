@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { updatePersonSchema } from "@/lib/schemas/people";
+import { updatePersonSchema, verifyPersonSchema } from "@/lib/schemas/people";
 
 describe("updatePersonSchema", () => {
   it("accepts the editable profile fields", () => {
@@ -44,6 +44,28 @@ describe("updatePersonSchema", () => {
         graduation_year: 2024.5,
         year_group: 4,
       }).success
+    ).toBe(false);
+  });
+});
+
+describe("verifyPersonSchema", () => {
+  it("accepts a person id", () => {
+    const result = verifyPersonSchema.safeParse({
+      personId: "11111111-1111-1111-1111-100000000011",
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects extra fields and invalid ids", () => {
+    expect(
+      verifyPersonSchema.safeParse({
+        personId: "11111111-1111-1111-1111-100000000011",
+        status: "verified",
+      }).success
+    ).toBe(false);
+    expect(
+      verifyPersonSchema.safeParse({ personId: "not-a-uuid" }).success
     ).toBe(false);
   });
 });

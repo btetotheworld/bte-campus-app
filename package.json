@@ -27,6 +27,8 @@
     "db:test:rls": "node scripts/run-psql.mjs -v ON_ERROR_STOP=1 -f db/tests/0003_rls.test.sql",
     "predb:test:auto-verify": "node scripts/guard-local.mjs",
     "db:test:auto-verify": "node scripts/db-test.mjs db/tests/0006_auto_verify.test.sql --strict",
+    "predb:test:verify-person-admin": "node scripts/guard-local.mjs",
+    "db:test:verify-person-admin": "node scripts/db-test.mjs db/tests/0007_verify_person_admin.test.sql --strict",
     "db:types": "node scripts/generate-db-types.mjs",
     "db:new": "pnpm exec supabase --workdir db migration new",
     "db:diff": "pnpm exec supabase --workdir db db diff --local",
