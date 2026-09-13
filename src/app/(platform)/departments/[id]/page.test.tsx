@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
 }));
 vi.mock("@/lib/auth/permissions", () => ({ loadPlatformAccess: mocks.access }));
 vi.mock("next/navigation", () => ({
+  useRouter: () => ({ refresh: vi.fn() }),
   notFound: () => {
     throw new Error("NOT_FOUND");
   },
@@ -72,6 +73,27 @@ describe("DepartmentPage", () => {
     });
     render(await DepartmentPage({ params: Promise.resolve({ id: SEED_ID }) }));
     expect(screen.getByRole("heading", { name: "BTE core" })).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Archive department" })
+    ).not.toBeInTheDocument();
+  });
+
+  it("keeps archived records readable with the archive time in WAT", async () => {
+    mocks.record.mockResolvedValue({
+      data: {
+        id: SEED_ID,
+        name: "BTE core",
+        kind: "team",
+        archived_at: "2026-09-09T12:00:00.000Z",
+      },
+      error: null,
+    });
+    render(await DepartmentPage({ params: Promise.resolve({ id: SEED_ID }) }));
+    expect(screen.getByText("Archived")).toBeVisible();
+    expect(screen.getByText(/13:00 WAT/)).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Archive department" })
+    ).not.toBeInTheDocument();
   });
 
   it("shows not found when RLS returns no record", async () => {

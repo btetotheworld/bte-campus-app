@@ -56,6 +56,14 @@ export default async function DepartmentsPage() {
         description="Browse the departments you can access."
         action={rows.length ? createLink : undefined}
       />
+      <nav aria-label="Department history" className="mb-6">
+        <Link
+          href="/departments/archived"
+          className="inline-flex min-h-(--control-height-touch) items-center text-navy underline focus-visible:outline-solid"
+        >
+          View archived departments
+        </Link>
+      </nav>
       {rows.length ? (
         <DepartmentTable rows={rows} />
       ) : (

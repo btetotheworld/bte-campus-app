@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/bte/page-header";
 import { DefinitionList } from "@/components/bte/definition-list";
 import { StatusBadge } from "@/components/bte/status-badge";
 import { createClient } from "@/lib/supabase/server";
+import { ArchiveDepartmentButton } from "../archive-department-button";
 
 export const metadata = { title: "Department" };
 
@@ -45,6 +46,11 @@ export default async function DepartmentPage({
       <PageHeader
         title={data.name}
         crumbs={[{ href: "/departments", label: "Departments" }]}
+        action={
+          !data.archived_at && canAccess(access, "departments", "update") ? (
+            <ArchiveDepartmentButton id={data.id} name={data.name} />
+          ) : undefined
+        }
       />
       <DefinitionList
         items={[
@@ -58,6 +64,19 @@ export default async function DepartmentPage({
             label: "Kind",
             value: data.kind === "team" ? "Team" : "Campus chapter",
           },
+          ...(data.archived_at
+            ? [
+                {
+                  label: "Archived at",
+                  value:
+                    new Intl.DateTimeFormat("en-GB", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                      timeZone: "Africa/Lagos",
+                    }).format(new Date(data.archived_at)) + " WAT",
+                },
+              ]
+            : []),
         ]}
       />
     </>
