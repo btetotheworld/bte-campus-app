@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EmptyState } from "@/components/bte/empty-state";
 
 import { PageHeader } from "@/components/bte/page-header";
 import { ModuleGate } from "@/app/(platform)/module-gate";
