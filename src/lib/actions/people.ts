@@ -165,6 +165,7 @@ export async function declineJoinApplication(
       return { ok: true, data: { declined: true } };
     }
   );
+};
 
 export async function updateOwnProfile(
   input: unknown
