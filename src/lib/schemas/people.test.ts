@@ -34,6 +34,8 @@ describe("join application schemas", () => {
     expect(
       declineJoinApplicationSchema.safeParse({ applicationId }).success
     ).toBe(true);
+  });
+});
 
 describe("updatePersonSchema", () => {
   it("accepts the editable profile fields", () => {
