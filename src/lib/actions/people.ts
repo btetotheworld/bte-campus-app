@@ -1,14 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getSessionAccess } from "@/lib/auth/permissions";
+import { getSessionAccess, loadPlatformAccess } from "@/lib/auth/permissions";
 import { getSessionPerson } from "@/lib/auth/session";
 import { runAction } from "@/lib/actions/run-action";
 import type { ActionResult } from "@/lib/actions/result";
+import { canAccess } from "@/lib/auth/nav-access";
 import {
   approveJoinApplicationSchema,
   declineJoinApplicationSchema,
   updatePersonSchema,
+  verifyPersonSchema,
 } from "@/lib/schemas/people";
 import { createClient } from "@/lib/supabase/server";
 
@@ -23,6 +25,60 @@ function canManageJoinApplications(access: {
         permission.module === "join_apps" && permission.operation === "update"
     )
   );
+}
+
+export async function verifyPerson(
+  input: unknown
+): Promise<ActionResult<{ verified: true }>> {
+  return runAction(verifyPersonSchema, input, async ({ personId }) => {
+    if (!(await getSessionPerson())) {
+      return {
+        ok: false,
+        error: "Sign in again before verifying a person.",
+      };
+    }
+    const access = await loadPlatformAccess();
+    if (!canAccess(access, "people", "update")) {
+      return {
+        ok: false,
+        error: "You cannot verify people. Ask a people manager for help.",
+      };
+    }
+    const supabase = await createClient();
+    const { error } = await supabase.rpc("verify_person_by_admin", {
+      p_person_id: personId,
+    });
+    if (error) {
+      if (error.message.includes("not authorized to verify a person")) {
+        return {
+          ok: false,
+          error: "You cannot verify people. Ask a people manager for help.",
+        };
+      }
+      if (error.message.includes("person not found")) {
+        return {
+          ok: false,
+          error:
+            "This person record could not be found. Refresh and try again.",
+        };
+      }
+      if (error.message.includes("only a pending person can be verified")) {
+        return {
+          ok: false,
+          error: "Only a pending person can be verified.",
+        };
+      }
+      return {
+        ok: false,
+        error:
+          "This person could not be verified. Refresh the record and try again.",
+      };
+    }
+    revalidatePath("/people");
+    revalidatePath("/people/records");
+    revalidatePath(`/people/records/${personId}`);
+    return { ok: true, data: { verified: true } };
+  });
 }
 
 export async function approveJoinApplication(
@@ -165,7 +221,7 @@ export async function declineJoinApplication(
       return { ok: true, data: { declined: true } };
     }
   );
-};
+}
 
 export async function updateOwnProfile(
   input: unknown

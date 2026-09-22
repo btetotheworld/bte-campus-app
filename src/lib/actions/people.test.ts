@@ -3,17 +3,20 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const {
   getSessionPerson,
   getSessionAccess,
+  loadPlatformAccess,
   getUser,
   maybeSingle,
   update,
   updateEq,
   insert,
   from,
+  rpc,
 } = vi.hoisted(() => {
   const mockedMaybeSingle = vi.fn();
   const mockedUpdate = vi.fn();
   const mockedUpdateEq = vi.fn();
   const mockedInsert = vi.fn();
+  const mockedRpc = vi.fn();
   const mockedFrom = vi.fn(() => ({
     select: vi.fn(() => ({
       eq: vi.fn(() => ({
@@ -27,12 +30,14 @@ const {
   return {
     getSessionPerson: vi.fn(),
     getSessionAccess: vi.fn(),
+    loadPlatformAccess: vi.fn(),
     getUser: vi.fn(),
     maybeSingle: mockedMaybeSingle,
     update: mockedUpdate,
     updateEq: mockedUpdateEq,
     insert: mockedInsert,
     from: mockedFrom,
+    rpc: mockedRpc,
   };
 });
 
@@ -42,6 +47,7 @@ vi.mock("@/lib/auth/session", () => ({
 
 vi.mock("@/lib/auth/permissions", () => ({
   getSessionAccess,
+  loadPlatformAccess,
 }));
 
 vi.mock("@/lib/supabase/server", () => ({
@@ -50,6 +56,7 @@ vi.mock("@/lib/supabase/server", () => ({
       getUser,
     },
     from,
+    rpc,
   })),
 }));
 
@@ -61,16 +68,16 @@ import {
   approveJoinApplication,
   declineJoinApplication,
   updateOwnProfile,
+  verifyPerson,
 } from "@/lib/actions/people";
 
-const applicationId =
-  "11111111-1111-1111-1111-100000000001";
+const applicationId = "11111111-1111-1111-1111-100000000001";
 
-const personId =
-  "11111111-1111-1111-1111-100000000002";
+const personId = "11111111-1111-1111-1111-100000000002";
 
-const departmentId =
-  "11111111-1111-1111-1111-100000000003";
+const departmentId = "11111111-1111-1111-1111-100000000003";
+
+const FATIMA = "11111111-1111-1111-1111-100000000011";
 
 const validApproval = {
   applicationId,
@@ -88,11 +95,13 @@ const validProfile = {
 beforeEach(() => {
   getSessionPerson.mockReset();
   getSessionAccess.mockReset();
+  loadPlatformAccess.mockReset();
   getUser.mockReset();
   maybeSingle.mockReset();
   update.mockReset();
   updateEq.mockReset();
   insert.mockReset();
+  rpc.mockReset();
   from.mockClear();
 
   update.mockImplementation(() => ({
@@ -120,9 +129,7 @@ describe("approveJoinApplication", () => {
       permissions: [],
     });
 
-    const result = await approveJoinApplication(
-      validApproval
-    );
+    const result = await approveJoinApplication(validApproval);
 
     expect(result).toEqual({
       ok: false,
@@ -163,9 +170,7 @@ describe("approveJoinApplication", () => {
       error: null,
     });
 
-    const result = await approveJoinApplication(
-      validApproval
-    );
+    const result = await approveJoinApplication(validApproval);
 
     expect(result).toEqual({
       ok: true,
@@ -182,17 +187,9 @@ describe("approveJoinApplication", () => {
       status: "approved",
     });
 
-    expect(updateEq).toHaveBeenNthCalledWith(
-      1,
-      "id",
-      personId
-    );
+    expect(updateEq).toHaveBeenNthCalledWith(1, "id", personId);
 
-    expect(updateEq).toHaveBeenNthCalledWith(
-      2,
-      "id",
-      applicationId
-    );
+    expect(updateEq).toHaveBeenNthCalledWith(2, "id", applicationId);
 
     expect(insert).toHaveBeenCalledWith({
       person_id: personId,
@@ -244,17 +241,9 @@ describe("declineJoinApplication", () => {
       status: "rejected",
     });
 
-    expect(updateEq).toHaveBeenNthCalledWith(
-      1,
-      "id",
-      personId
-    );
+    expect(updateEq).toHaveBeenNthCalledWith(1, "id", personId);
 
-    expect(updateEq).toHaveBeenNthCalledWith(
-      2,
-      "id",
-      applicationId
-    );
+    expect(updateEq).toHaveBeenNthCalledWith(2, "id", applicationId);
   });
 });
 
@@ -277,14 +266,11 @@ describe("updateOwnProfile", () => {
       error: null,
     });
 
-    const result = await updateOwnProfile(
-      validProfile
-    );
+    const result = await updateOwnProfile(validProfile);
 
     expect(result).toEqual({
       ok: false,
-      error:
-        "You must be signed in to update your profile.",
+      error: "You must be signed in to update your profile.",
     });
   });
 
@@ -310,9 +296,7 @@ describe("updateOwnProfile", () => {
       error: null,
     });
 
-    const result = await updateOwnProfile(
-      validProfile
-    );
+    const result = await updateOwnProfile(validProfile);
 
     expect(result).toEqual({
       ok: true,
@@ -321,14 +305,9 @@ describe("updateOwnProfile", () => {
       },
     });
 
-    expect(update).toHaveBeenCalledWith(
-      validProfile
-    );
+    expect(update).toHaveBeenCalledWith(validProfile);
 
-    expect(updateEq).toHaveBeenCalledWith(
-      "id",
-      "person-id"
-    );
+    expect(updateEq).toHaveBeenCalledWith("id", "person-id");
   });
 
   it("returns an error when the profile update fails", async () => {
@@ -355,14 +334,84 @@ describe("updateOwnProfile", () => {
       },
     });
 
-    const result = await updateOwnProfile(
-      validProfile
-    );
+    const result = await updateOwnProfile(validProfile);
 
     expect(result).toEqual({
       ok: false,
-      error:
-        "Your profile could not be saved. Try again.",
+      error: "Your profile could not be saved. Try again.",
+    });
+  });
+});
+
+describe("verifyPerson", () => {
+  beforeEach(() => {
+    getSessionPerson.mockResolvedValue({
+      id: "11111111-1111-1111-1111-100000000001",
+      full_name: "Ada Okafor",
+      email: "ada.founder@example.org",
+      status: "verified",
+    });
+    loadPlatformAccess.mockResolvedValue({
+      isFounder: true,
+      permissions: [],
+    });
+  });
+
+  it("rejects invalid input before calling Supabase", async () => {
+    const result = await verifyPerson({ personId: "not-a-uuid" });
+
+    expect(result.ok).toBe(false);
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it("requires a signed-in person", async () => {
+    getSessionPerson.mockResolvedValue(null);
+
+    const result = await verifyPerson({ personId: FATIMA });
+
+    expect(result).toEqual({
+      ok: false,
+      error: "Sign in again before verifying a person.",
+    });
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it("requires people update permission", async () => {
+    loadPlatformAccess.mockResolvedValue({
+      isFounder: false,
+      permissions: [{ module: "people", operation: "read" }],
+    });
+
+    const result = await verifyPerson({ personId: FATIMA });
+
+    expect(result).toEqual({
+      ok: false,
+      error: "You cannot verify people. Ask a people manager for help.",
+    });
+    expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it("calls verify_person_by_admin for authorized users", async () => {
+    rpc.mockResolvedValue({ error: null });
+
+    const result = await verifyPerson({ personId: FATIMA });
+
+    expect(result).toEqual({ ok: true, data: { verified: true } });
+    expect(rpc).toHaveBeenCalledWith("verify_person_by_admin", {
+      p_person_id: FATIMA,
+    });
+  });
+
+  it("maps a not pending rejection from the database", async () => {
+    rpc.mockResolvedValue({
+      error: { message: "only a pending person can be verified" },
+    });
+
+    const result = await verifyPerson({ personId: FATIMA });
+
+    expect(result).toEqual({
+      ok: false,
+      error: "Only a pending person can be verified.",
     });
   });
 });

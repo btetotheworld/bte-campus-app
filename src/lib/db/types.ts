@@ -1247,6 +1247,10 @@ export type Database = {
         Args: Record<string, never>;
         Returns: Json;
       };
+      verify_person_by_admin: {
+        Args: { p_person_id: string };
+        Returns: undefined;
+      };
     };
     Enums: {
       application_status:

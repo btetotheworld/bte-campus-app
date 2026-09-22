@@ -1,4 +1,11 @@
 import { z } from "zod";
+import { personRecordIdSchema } from "@/lib/schemas/edit-person-record";
+
+export const verifyPersonSchema = z.strictObject({
+  personId: personRecordIdSchema,
+});
+
+export type VerifyPersonInput = z.infer<typeof verifyPersonSchema>;
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

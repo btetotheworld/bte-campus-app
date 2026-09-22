@@ -3,6 +3,7 @@ import {
   approveJoinApplicationSchema,
   declineJoinApplicationSchema,
   updatePersonSchema,
+  verifyPersonSchema,
 } from "@/lib/schemas/people";
 
 const applicationId = "11111111-1111-1111-1111-100000000001";
@@ -80,6 +81,28 @@ describe("updatePersonSchema", () => {
         graduation_year: 2024.5,
         year_group: 4,
       }).success
+    ).toBe(false);
+  });
+});
+
+describe("verifyPersonSchema", () => {
+  it("accepts a person id", () => {
+    const result = verifyPersonSchema.safeParse({
+      personId: "11111111-1111-1111-1111-100000000011",
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects extra fields and invalid ids", () => {
+    expect(
+      verifyPersonSchema.safeParse({
+        personId: "11111111-1111-1111-1111-100000000011",
+        status: "verified",
+      }).success
+    ).toBe(false);
+    expect(
+      verifyPersonSchema.safeParse({ personId: "not-a-uuid" }).success
     ).toBe(false);
   });
 });
