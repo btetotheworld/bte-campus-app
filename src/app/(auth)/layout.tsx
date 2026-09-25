@@ -1,6 +1,12 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { BteLogo } from "@/components/bte/logo";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "BTE | Auth",
+  description: "BTE Auth",
+};
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
