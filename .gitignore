@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/output/
+/.playwright-cli/
 
 # next.js
 /.next/
@@ -31,7 +33,6 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
-.env*
 !.env.example
 
 # vercel
@@ -54,3 +55,6 @@ next-env.d.ts
 
 # Never commit a remote data dump. Local seed is synthetic: db/seed.sql.
 supabase/seed.sql
+
+.early.coverage
+config.bat

@@ -14,6 +14,7 @@ describe("visibleNavItems", () => {
     expect(labels({ isFounder: true, permissions: [] })).toEqual([
       "Home",
       "People",
+      "Departments",
       "Chapters",
       "Applications",
       "Meetings",
@@ -86,6 +87,14 @@ describe("canOpenPath", () => {
   it("rejects a gated path the person cannot read", () => {
     expect(canOpenPath("/people", applicant)).toBe(false);
     expect(canOpenPath("/campus/chapters", applicant)).toBe(false);
+    expect(canOpenPath("/departments", applicant)).toBe(false);
+    expect(canOpenPath("/departments/new", applicant)).toBe(false);
+    expect(
+      canOpenPath(
+        "/departments/aaaaaaaa-0000-0000-0000-000000000001",
+        applicant
+      )
+    ).toBe(false);
   });
 
   it("allows a nested path when the parent module is granted", () => {
