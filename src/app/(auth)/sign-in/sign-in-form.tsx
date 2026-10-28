@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "@/lib/actions/auth";
 import { FormField } from "@/components/bte/form-field";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -28,6 +29,7 @@ export function SignInForm({
     reason ? (REASON_COPY[reason] ?? null) : null
   );
   const [pending, setPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -63,17 +65,41 @@ export function SignInForm({
           type="email"
           autoComplete="email"
           required
+          disabled={pending}
         />
       </FormField>
 
       <FormField id="password" label="Password">
-        <Input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-        />
+        <div className="relative">
+          <Input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            required
+            disabled={pending}
+            className="pr-12"
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            aria-controls="password"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+            disabled={pending}
+            className="absolute top-1 right-1"
+            onClick={() => {
+              setShowPassword((open) => !open);
+            }}
+          >
+            {showPassword ? (
+              <EyeOff aria-hidden="true" />
+            ) : (
+              <Eye aria-hidden="true" />
+            )}
+          </Button>
+        </div>
       </FormField>
 
       <div className="flex flex-col items-start gap-3">
