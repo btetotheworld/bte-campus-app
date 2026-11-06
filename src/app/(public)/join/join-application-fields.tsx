@@ -11,8 +11,8 @@ export function JoinApplicationFields() {
       <Alert>
         <AlertTitle>Account setup is required</AlertTitle>
         <AlertDescription>
-          This form will open after the account and age-verification foundation
-          in issue 60 is available.
+          Account setup is currently unavailable. You cannot save or submit an
+          application from this page yet.
         </AlertDescription>
       </Alert>
       <FormField id="full-name" label="Full name">
