@@ -9,9 +9,13 @@ export type VerifyPersonInput = z.infer<typeof verifyPersonSchema>;
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+export const joinApplicationIdSchema = z
+  .string()
+  .regex(UUID, "Choose an application");
+
 export const approveJoinApplicationSchema = z
   .object({
-    applicationId: z.string().regex(UUID, "Choose an application"),
+    applicationId: joinApplicationIdSchema,
     departmentId: z.string().regex(UUID, "Choose a department"),
     role: z.enum([
       "coordinator",
@@ -25,7 +29,7 @@ export const approveJoinApplicationSchema = z
 
 export const declineJoinApplicationSchema = z
   .object({
-    applicationId: z.string().regex(UUID, "Choose an application"),
+    applicationId: joinApplicationIdSchema,
   })
   .strict();
 
