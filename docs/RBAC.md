@@ -12,7 +12,7 @@ The documents use "role" for three separate concepts. Most access-control failur
 | -------------- | ----------------------- | ----------------------------------------------- |
 | **Permission** | What may you act on?    | Read meeting reports. Confirm an approval gate. |
 | **Scope**      | Where does it apply?    | All chapters. One chapter. Your own record.     |
-| **Visibility** | Are you shown publicly? | On the team page, or not yet.                   |
+| **Visibility** | Who can see your profile? | Verified members only, or anyone.             |
 
 A Program Coordinator and a Campus Lead may both hold "read meeting reports." They differ only in scope. A campus lead in their first week has full chapter permissions and no public visibility at all.
 
@@ -22,13 +22,14 @@ A Program Coordinator and a Campus Lead may both hold "read meeting reports." Th
 
 **This resolves `JOURNEYS` issue 2.**
 
-The conflict: People Management auto-verifies a person after 90 days, at which point they become publicly visible. A campus lead is selected and must run a chapter immediately. Two documents appeared to disagree.
+The conflict: People Management auto-verifies a person after 90 days, at which point they become visible in member listings. A campus lead is selected and must run a chapter immediately. Two documents appeared to disagree.
 
-They do not. `pending → verified → hidden → inactive` describes **whether a person appears on the public team and department pages**. It says nothing about what they can do.
+They do not. `pending → verified → hidden → inactive` describes **whether a person appears to authenticated, verified members on team and department pages**. It says nothing about what they can do.
 
-- A campus lead is `pending` for their first 90 days, invisible on the public site, and has full permissions over their chapter from day one.
-- At 90 days they auto-verify, appear publicly, and receive the Called badge. Permissions do not change.
-- `hidden` removes someone from public listings. Permissions unchanged.
+- A campus lead is `pending` for their first 90 days, invisible on member listings, and has full permissions over their chapter from day one.
+- At 90 days they auto-verify, appear to authenticated, verified members, and receive the Called badge. Permissions do not change.
+- `hidden` removes someone from member listings. Permissions unchanged.
+- Verification never makes a profile visible to anonymous visitors. Public visibility is a separate user-controlled opt-in described in section 13.
 
 **One exception, and it is a security matter rather than a display one.** `inactive` means someone has left. It must revoke access, not merely hide a profile. The documents describe these states as display-only, which would leave a departed volunteer able to sign in. Setting `inactive` disables the login and ends live sessions.
 
@@ -40,10 +41,10 @@ They do not. `pending → verified → hidden → inactive` describes **whether 
 
 Campus students need accounts to post build logs and submit work. They are not volunteers, appear on no team page, and hold no tenure badge. Rather than a second people model, add one column.
 
-| Kind        | Publicly listed    | Earns badges | Examples                                            |
-| ----------- | ------------------ | ------------ | --------------------------------------------------- |
-| `team`      | Yes, once verified | Yes          | Founder, leads, assistants, volunteers, coordinator |
-| `community` | No                 | No           | Campus students, external submitters                |
+| Kind        | Listed to verified members | Earns badges | Examples                                            |
+| ----------- | --------------------------- | ------------ | --------------------------------------------------- |
+| `team`      | Yes, once verified          | Yes          | Founder, leads, assistants, volunteers, coordinator |
+| `community` | No                          | No           | Campus students, external submitters                |
 
 Campus **leads** are `team`. They are BTE volunteers who run a chapter. Campus **members** are `community`. One `people` table, one auth model, one column of difference.
 
@@ -146,7 +147,7 @@ Three scope rules that matter more than they look:
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Safety escalations     | `category = 'safety'` is readable by the founder and coordinator only. Not by other leads, not by an auditor without explicit grant.                                        |
 | Reviewer conflicts     | A reviewer who has declared a relationship is blocked from that submission at the policy level, not by convention. Nobody reviews work from their own chapter.              |
-| Minors                 | Where date of birth indicates under 18, the profile is never publicly listed regardless of status, and photo upload requires recorded guardian consent. See open decisions. |
+| Minors                 | People under 18 cannot create or hold an account.                                                                                                                        |
 | Application scores     | Readable by `program_coordinator` and `founder` only. Never the applicant, never their partner.                                                                             |
 | Person contact details | Readable within own department, and globally only by `people_manager` and above. Not by every signed-in user.                                                               |
 
@@ -216,15 +217,20 @@ Sessions end on `inactive`. Password reset is standard Supabase.
 
 ---
 
-## 13. Open decisions
+## 13. Privacy decisions and remaining open decisions
+
+### Resolved privacy decisions
+
+1. **Minimum age.** A person must be at least 18 to create or hold an account. The platform does not create accounts for minors.
+2. **Data retention and deletion.** Personal data is retained for as long as the account exists. A person may request account deletion from the People Manager. The People Manager deletes the account and its personal data within 30 days of the request.
+3. **Profile visibility and consent.** A verified profile is visible by default to all authenticated, verified members across BTE Campus. It is not visible to anonymous visitors and is not intentionally made indexable. Each person may separately opt in to a public profile that is visible to anyone and may be indexed by search engines. Public visibility is off by default and verification does not enable it. Signup must present terms and conditions and a privacy notice that explain the default visibility, the public opt-in, retention, and deletion route.
+
+### Remaining open decisions
 
 | #   | Decision                                                                                                                                                                                                                                    |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | **Minors.** Some 100-level students will be under 18. Do they get accounts at all? If yes, no public profile, no photo without guardian consent, and a separate consent record. This needs deciding before any student signs up, not after. |
-| 2   | **NDPR.** Photos, dates of birth, contact details and student data. A retention period, a deletion route, and a privacy notice at signup. Currently nothing exists.                                                                         |
-| 3   | **Public profile consent.** Auto-verification makes someone public at 90 days without them agreeing to it. Capture consent at onboarding, or make public listing opt-in.                                                                    |
 | 4   | **Does the founder hold `auditor`?** Separating them means the founder cannot silently read safety records. Worth considering even in a small organisation.                                                                                 |
 | 5   | **Break-glass.** If the coordinator is unreachable and a chapter needs an urgent change, does the founder act directly, and is that logged differently?                                                                                     |
 | 6   | **Do team leads get any admin surface at all,** or is People entirely a `people_manager` function? People Logic proposes notifying leads of new pending volunteers, which implies at least a read view.                                     |
 
-Items 1 and 2 are the ones I would not carry into a sprint unresolved. Everything else can be decided as it is built.
+The remaining decisions can be made as their features are built.

@@ -54,8 +54,8 @@ Source in brackets. `P` People, `C` Campus, `S` Showcase, `X` cross-cutting.
 | `P4`  | Visitor applies through a department page, department pre-filled and locked                          | People Logic 6                                 |
 | `P5`  | Admin reviews join applications and approves or rejects                                              | People Logic 6, 7                              |
 | `P6`  | Admin creates a person record from an approved application                                           | People Logic 6, **gap: owner undefined**       |
-| `P7`  | New person sits `pending`, not publicly visible                                                      | People Logic 3                                 |
-| `P8`  | Person auto-verifies after configurable duration, default 90 days, becomes public                    | People Logic 3                                 |
+| `P7`  | New person sits `pending`, not visible in member listings                                            | People Logic 3                                 |
+| `P8`  | Person auto-verifies after configurable duration, default 90 days, and becomes visible to authenticated, verified members | People Logic 3               |
 | `P9`  | Admin manually overrides to verify immediately                                                       | People Logic 3                                 |
 | `P10` | Person receives Called badge at 3 months, Filled at 1 year, Skilled at 2 years, with automatic email | People Logic 4                                 |
 | `P11` | Admin creates and orders departments: name, description, photo, display order                        | People Logic 1                                 |
@@ -203,15 +203,15 @@ Issues 1 to 4 are resolved in `docs/RBAC.md`. Do not re-open them in a feature.
 | #   | Issue                                                                                                                                                                                                                       | Status                                                                     |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | 1   | **Who creates a person record after an application is approved?** Named as an undefined gap in People Logic 8. Blocks `P6`.                                                                                                 | Resolved. The system creates the row at apply. See `RBAC.md` section 4.    |
-| 2   | **A campus lead is selected and must run a chapter immediately, but a new person is not publicly visible for 90 days.** Two documents disagree. Does selection auto-verify, or does a lead run a chapter while invisible?   | Resolved. Visibility is not permission. See `RBAC.md` section 2.           |
+| 2   | **A campus lead is selected and must run a chapter immediately, but a new person is not listed for 90 days.** Two documents disagree. Does selection auto-verify, or does a lead run a chapter while unlisted?              | Resolved. Visibility is not permission. See `RBAC.md` section 2.           |
 | 3   | **Do campus students enter the People system at all?** They are community members, not volunteers, and hold no tenure badge. But they need a login to post build logs and submit work. Person record, or something lighter? | Resolved. One `people` table, `kind = community`. See `RBAC.md` section 3. |
 | 4   | **Applicants are not people.** Two application types exist, BTE join and campus lead, both from someone with no person record. One pre-person model or two?                                                                 | Resolved. Applicants are people from apply. See `RBAC.md` section 4.       |
-| 5   | **Photo is required on every profile and profiles are public.** Consent for public visibility is not captured anywhere.                                                                                                     | Open. Also `RBAC.md` section 13, item 3.                                   |
-| 6   | **100-level students may be under 18.** Photos, dates of birth and public profiles for minors is a different legal question, and NDPR applies to all of it.                                                                 | Open. Also `RBAC.md` section 13, items 1 and 2.                            |
+| 5   | **Photo is required on every profile and profiles are public.** Consent for public visibility is not captured anywhere.                                                                                                     | Resolved. Profiles are member-visible by default and public only by opt-in. See `RBAC.md` section 13. |
+| 6   | **100-level students may be under 18.** Photos, dates of birth and public profiles for minors is a different legal question, and NDPR applies to all of it.                                                                 | Resolved. Accounts require the person to be at least 18. See `RBAC.md` section 13.                    |
 | 7   | **`P18` onboarding track and `P19` mentor assignment exist in SOPs with no platform support.** Build, or keep manual?                                                                                                       | Open.                                                                      |
 | 8   | **No audit trail is specified anywhere,** yet gate confirmations, status changes and outcome decisions all need one.                                                                                                        | Specified in `RBAC.md` section 11. Not yet built.                          |
 
-Items 5 and 6 are the ones I would not leave to a later sprint.
+Items 5 and 6 are resolved in `RBAC.md` section 13.
 
 ---
 
